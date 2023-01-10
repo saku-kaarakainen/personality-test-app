@@ -1,0 +1,25 @@
+version: "2"
+
+# redis requires network
+networks:
+  db-network:
+
+services:
+  personality-test-db:
+    image: redis:alpine
+    ports:
+      - 6379:6379
+    container_name: personality-test-db
+    networks:
+      - db-network
+
+  personality-test-api:
+    image: personality-test-api:latest
+    ports:
+      - 8080:8080
+    links:
+      - personality-test-db
+    container_name: personality-test-api
+    networks:
+      - db-network
+      
