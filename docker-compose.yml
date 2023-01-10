@@ -4,14 +4,25 @@ version: "2"
 networks:
   db-network:
 
+volumes:
+  redis-modules:
+    source: redislabs/rejson:
+    destination: /usr/lib/redis/modules/ext/
+
 services:
   personality-test-db:
-    image: redis:alpine
+    # have stack server instead of plain redis, so redisJSON is available
+    # It contains a little bit of unnecessary boilerplate (other modules)
+    # more lightweight approach would be to to use only redis with redisJSON module
+    image: redis:latest
+    command: /usr/local/bin/redis-server # --loadmodule /usr/lib/redis/modules/rejson.so 
     ports:
       - 6379:6379
     container_name: personality-test-db
     networks:
       - db-network
+    volumes:
+      - /usr/lib/redis/modules/ext/
 
   personality-test-api:
     image: personality-test-api:latest
