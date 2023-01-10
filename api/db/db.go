@@ -22,6 +22,8 @@ var (
 		Addr:     "personality-test-db:6379",
 		Password: "", // no password set
 		DB:       0,  // use default db
+		//Network:     "db-network",
+		//DialTimeout: 60,
 	})
 	rh = rejson.NewReJSONHandler()
 )
