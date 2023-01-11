@@ -1,7 +1,8 @@
 name: Build and Test API
-
-on: [push]
-
+on: push
+defaults:
+  run:
+    working-directory: api
 jobs:
   build:
 
