@@ -29,10 +29,10 @@ var (
 )
 
 func init() {
-	ping()
-
 	rh.SetGoRedisClient(cli)
-	populate(rh)
+
+	ping()
+	populate()
 }
 
 func ping() {
@@ -45,7 +45,7 @@ func ping() {
 	}
 }
 
-func populate(rh *rejson.Handler) {
+func populate() {
 	fmt.Println("starting to populate")
 	test := Test{
 		Foo:     "hardcoded1",
