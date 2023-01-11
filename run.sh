@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -e
 
-# bootstrap API
+# build the docker image
 docker build -t personality-test-api .
 
-# launch API
-docker run -it --rm -p 8080:8080 personality-test-api
+# launch
+docker-compose up

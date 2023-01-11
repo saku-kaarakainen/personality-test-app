@@ -17,3 +17,8 @@ You can find examples of questions here: https://www.psychologies.co.uk/self/are
 
 
 It is a plus if you write some unit-tests.
+
+
+## How to run this app
+
+Running `./run.sh` should be enough. If you are using a machine, that does not support bash scripts, you can call it's commands separately. For this, you need to have Docker installed on your system.
