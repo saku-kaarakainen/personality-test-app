@@ -2,18 +2,16 @@ package db
 
 import (
 	"context"
+	"encoding/json"
+	"errors"
 	"fmt"
+	"io/ioutil"
 	"log"
+	"os"
 
 	goredis "github.com/go-redis/redis/v8" // uses redis7
-	"github.com/gomodule/redigo/redis"
 	"github.com/nitishm/go-rejson/v4"
 )
-
-type Test struct {
-	Foo     string `json:"foo,omitempty"`
-	SomeKey string `json:"some_key,omitempty"`
-}
 
 var (
 	ctx = context.Background()
@@ -45,50 +43,90 @@ func ping() {
 	}
 }
 
+// questions
+type Answer struct {
+	Score [2]int `json:"id"`
+	Label string `json:"question_label"`
+}
+
+type Question struct {
+	Id      string   `json:"id"`
+	Label   string   `json:"question_label"`
+	Answers []Answer `json:"answers"`
+}
+
+// results
+type Result struct {
+	Id                    string   `json:"id"`
+	Label                 string   `json:"question_label"`
+	DescriptionParagraphs []string `json:"description_paragraphs"`
+}
+
+func setFromFile(filename string, key string, objType interface{}) error {
+	jsonFile, err := os.Open(filename)
+	if err != nil {
+		log.Fatalf("Failed to open json file '%s'.\n", filename)
+		return err
+	}
+
+	defer jsonFile.Close()
+
+	byteValue, err := ioutil.ReadAll(jsonFile)
+	if err != nil {
+		log.Fatalf("Failed to get bytes of json file '%s'.\n", filename)
+		return err
+	}
+
+	json.Unmarshal(byteValue, &objType)
+
+	res, err := rh.JSONSet(key, ".", objType)
+	if err != nil {
+		log.Fatalf("Failed to store to redis json bytes with key '%s'.\n", key)
+		return err
+	}
+
+	if res.(string) != "OK" {
+		log.Fatalf(
+			"Failed to store file '%s' was stored in Redis with key '%s'. The response '%s'.\n",
+			filename,
+			key,
+			res,
+		)
+		return errors.New("Failed to store file was stored in Redis with key.\n")
+	}
+
+	log.Printf(
+		"File '%s' was stored in Redis with key '%s'. The response '%s'.\n",
+		filename,
+		key,
+		res,
+	)
+
+	return nil
+}
+
 func populate() {
-	fmt.Println("starting to populate")
-	test := Test{
-		Foo:     "hardcoded1",
-		SomeKey: "hardcoded2",
-	}
 
-	res, err := rh.JSONSet("test", ".", test)
-	if err != nil {
-		log.Fatalf("Failed to JSONSet")
-		return
-	}
+	var questions []Question
+	setFromFile("db/data/questions.json", "questions", questions)
 
-	fmt.Println("JSON with key 'test' set!")
+	var results []Result
+	setFromFile("db/data/results.json", "results", results)
+}
 
-	if res.(string) == "OK" {
-		fmt.Printf("Success: %s\n", res)
-	} else {
-		fmt.Println("Failed to Set: ")
-	}
+func LoadModule() {
 
-	testJSON, err := redis.Bytes(rh.JSONGet("test", "."))
-	if err != nil {
-		fmt.Println("Failed to JSONGet")
-		panic("Failed to JSONGet")
-	}
-
-	fmt.Println(("found json: " + string(testJSON)))
 }
 
 // return int8[]
-func Get(key string) (res interface{}, err error) {
-	return rh.JSONGet("test", ".")
-	// return res, err
+func Get(key string) (map[string]interface{}, error) {
+	jsonBlob, err := rh.JSONGet(key, ".")
+	if err != nil {
+		return nil, err
+	}
 
-	// fmt.Println("I am type of:")
-	// fmt.Println(reflect.TypeOf(obj))
+	var data map[string]interface{}
+	json.Unmarshal(jsonBlob.([]byte), &data)
 
-	// bts, err := redis.Bytes(obj, err)
-
-	// return bts, err
-	// if err != nil {
-	// 	fmt.Println("Failed to JSONGet")
-	// 	panic("Failed to JSONGet")
-	// }
-	//return rh.JSONGet("test", ".")
+	return data, nil
 }

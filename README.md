@@ -22,3 +22,17 @@ It is a plus if you write some unit-tests.
 ## How to run this app
 
 Running `./run.sh` should be enough. If you are using a machine, that does not support bash scripts, you can call it's commands separately. For this, you need to have Docker installed on your system.
+
+
+## Troubleshoot
+
+To check values stored in redis database, open terminal of redis container. You can open redis with command:
+```
+# You don't need to use --raw, but I recommend in order to pretty print JSON data.
+redis-cli --raw
+```
+
+You can find json, pretty printed:
+```
+JSON.GET results INDENT "\t" NEWLINE "\n" SPACE " " 
+```

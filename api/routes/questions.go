@@ -1,8 +1,7 @@
 package routes
 
 import (
-	"encoding/json"
-	"fmt"
+	"log"
 
 	"github.com/gin-gonic/gin"
 	"github.com/saku-kaarakainen/personality-test-app/api/db"
@@ -21,23 +20,16 @@ type Person struct {
 }
 
 func Get_questions(ctx *gin.Context) {
-	jsonBlob, err := db.Get("test")
-	var data map[string]interface{}
-	json.Unmarshal(jsonBlob.([]byte), &data)
+	log.Println("get_questions")
 
-	// fmt.Println("We found: " + string(obj))
-
-	// //fmt.Println("No errors! So we are going to pass json file: " + jsonFile)
-	// ctx.JSON(200, string(obj))
-
-	// p := Person{Name: "John Doe", Age: 30}
-
-	// jsonData, err := json.Marshal(p)
+	data, err := db.Get("questions")
 	if err != nil {
-		fmt.Println("Error marshalling:", err)
+		log.Println("Error getting value:", err)
+		AbortMsg(500, err, ctx)
+		return
 	}
 
-	// test := gin.H{}
-
+	log.Println("Return data:")
+	log.Println(data)
 	ctx.JSON(200, data)
 }
