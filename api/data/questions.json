@@ -1,0 +1,134 @@
+[
+    {
+        "id": "1",
+        "question": "You’re really busy at work and a colleague is telling you their life story and personal woes. You:",
+        "answers": [
+            {
+                "score": ["0", "0"],
+                "answer": "Don’t dare to interrupt them"
+            },
+            {
+                "score": ["0", "1"],
+                "answer": "Think it’s more important to give them some of your time; work can wait"
+            },
+            {
+                "score": ["1", "0"],
+                "answer": "Listen, but with only with half an ear"
+            },
+            {
+                "score": ["1", "1"],
+                "answer": "Interrupt and explain that you are really busy at the moment"
+            }
+        ]
+    },
+    {
+        "id": "1",
+        "question": "You’ve been sitting in the doctor’s waiting room for more than 25 minutes. You:",
+        "answers": [
+            {
+                "score": ["0", "0"],
+                "answer": "Look at your watch every two minutes"
+            },
+            {
+                "score": ["0", "1"],
+                "answer": "Bubble with inner anger, but keep quiet"
+            },
+            {
+                "score": ["1", "0"],
+                "answer": "Explain to other equally impatient people in the room that the doctor is always running late"
+            },
+            {
+                "score": ["1", "1"],
+                "answer": "Complain in a loud voice, while tapping your foot impatiently"
+            }
+        ]
+    },
+    {
+        "id": "1",
+        "question": "You’re having an animated discussion with a colleague regarding a project that you’re in charge of. You:",
+        "answers": [
+            {
+                "score": ["0", "0"],
+                "answer": "Don’t dare contradict them"
+            },
+            {
+                "score": ["0", "1"],
+                "answer": "Think that they are obviously right"
+            },
+            {
+                "score": ["1", "0"],
+                "answer": "Defend your own point of view, tooth and nail"
+            },
+            {
+                "score": ["1", "1"],
+                "answer": "Continuously interrupt your colleague"
+            }
+        ]
+    },
+    {
+        "id": "1",
+        "question": "You are taking part in a guided tour of a museum. You:",
+        "answers": [
+            {
+                "score": ["0", "0"],
+                "answer": "Are a bit too far towards the back so don’t really hear what the guide is saying"
+            },
+            {
+                "score": ["0", "1"],
+                "answer": "Follow the group without question"
+            },
+            {
+                "score": ["1", "0"],
+                "answer": "Make sure that everyone is able to hear properly"
+            },
+            {
+                "score": ["1", "1"],
+                "answer": "Are right up the front, adding your own comments in a loud voice"
+            }
+        ]
+    },
+    {
+        "id": "1",
+        "question": "During dinner parties at your home, you have a hard time with people who:",
+        "answers": [
+            {
+                "score": ["0", "0"],
+                "answer": "Ask you to tell a story in front of everyone else"
+            },
+            {
+                "score": ["0", "1"],
+                "answer": "Talk privately between themselves"
+            },
+            {
+                "score": ["1", "0"],
+                "answer": "Hang around you all evening"
+            },
+            {
+                "score": ["1", "1"],
+                "answer": "Always drag the conversation back to themselves"
+            }
+        ]
+    },
+    {
+        "id": "1",
+        "question": "You crack a joke at work, but nobody seems to have noticed. You:",
+        "answers": [
+            {
+                "score": ["0", "0"],
+                "answer": "Think it’s for the best — it was a lame joke anyway"
+            },
+            {
+                "score": ["0", "1"],
+                "answer": "Wait to share it with your friends after work"
+            },
+            {
+                "score": ["1", "0"],
+                "answer": "Try again a bit later with one of your colleagues"
+            },
+            {
+                "score": ["1", "1"],
+                "answer": "Keep telling it until they pay attention"
+            }
+        ]
+    }
+]
