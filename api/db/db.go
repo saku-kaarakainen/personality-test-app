@@ -75,8 +75,20 @@ func populate() {
 	fmt.Println(("found json: " + string(testJSON)))
 }
 
-func LoadModule() {
-	// makes sure init is called.
-	// init is lazy-load so it will be called
-	// when the module is referred first time.
+// return int8[]
+func Get(key string) (res interface{}, err error) {
+	return rh.JSONGet("test", ".")
+	// return res, err
+
+	// fmt.Println("I am type of:")
+	// fmt.Println(reflect.TypeOf(obj))
+
+	// bts, err := redis.Bytes(obj, err)
+
+	// return bts, err
+	// if err != nil {
+	// 	fmt.Println("Failed to JSONGet")
+	// 	panic("Failed to JSONGet")
+	// }
+	//return rh.JSONGet("test", ".")
 }
