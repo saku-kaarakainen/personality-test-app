@@ -22,7 +22,7 @@ type Person struct {
 func Get_questions(ctx *gin.Context) {
 	log.Println("get_questions")
 
-	data, err := db.Get("questions")
+	data, err := db.GetGuestions()
 	if err != nil {
 		log.Println("Error getting value:", err)
 		AbortMsg(500, err, ctx)

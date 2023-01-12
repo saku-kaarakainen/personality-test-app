@@ -1,9 +1,10 @@
 package main
 
 import (
+	"log"
+
 	"github.com/gin-gonic/gin"
 
-	"github.com/saku-kaarakainen/personality-test-app/api/db"
 	"github.com/saku-kaarakainen/personality-test-app/api/routes"
 )
 
@@ -19,5 +20,5 @@ func setupRouter() *gin.Engine {
 func main() {
 	router := setupRouter()
 	router.Run(":8080")
-	db.LoadModule()
+	log.Println("Start debugging at http://localhost:8080/questions")
 }

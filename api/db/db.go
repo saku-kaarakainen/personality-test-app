@@ -27,6 +27,7 @@ var (
 )
 
 func init() {
+	log.Println("Init mod db")
 	rh.SetGoRedisClient(cli)
 
 	ping()
@@ -114,18 +115,13 @@ func populate() {
 	setFromFile("db/data/results.json", "results", results)
 }
 
-func LoadModule() {
-
-}
-
-// return int8[]
-func Get(key string) (map[string]interface{}, error) {
-	jsonBlob, err := rh.JSONGet(key, ".")
+func GetGuestions() ([]Question, error) {
+	jsonBlob, err := rh.JSONGet("questions", ".")
 	if err != nil {
 		return nil, err
 	}
 
-	var data map[string]interface{}
+	var data []Question
 	json.Unmarshal(jsonBlob.([]byte), &data)
 
 	return data, nil
