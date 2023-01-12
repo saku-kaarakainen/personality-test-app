@@ -14,12 +14,7 @@ func AbortMsg(code int, err error, c *gin.Context) {
 	c.Abort()
 }
 
-type Person struct {
-	Name string
-	Age  int
-}
-
-func Get_questions(ctx *gin.Context) {
+func Get_questions(ctx *gin.Context, db db.IDb) {
 	log.Println("get_questions")
 
 	data, err := db.GetGuestions()

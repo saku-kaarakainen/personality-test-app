@@ -13,29 +13,44 @@ import (
 	"github.com/nitishm/go-rejson/v4"
 )
 
-var (
-	ctx = context.Background()
-	cli = goredis.NewClient(&goredis.Options{
-		// TODO: Add username and password, also .env
-		Addr:     "personality-test-db:6379",
-		Password: "", // no password set
-		DB:       0,  // use default db
-		//Network:     "db-network",
-		//DialTimeout: 60,
-	})
-	rh = rejson.NewReJSONHandler()
-)
+/*
+	TODO: Create integration test for the methods of this module.
+	It is possible to do unit test to test each method,
+	but the tests would be meaningless.
 
-func init() {
-	log.Println("Init mod db")
-	rh.SetGoRedisClient(cli)
+	It would be more meaningful to do integration test to test
+	if the data is actually stored and fetched from the database.
 
-	ping()
-	populate()
+	Once that test is implemented, Ping() - method does not make sense in the way it is implemented.
+	Afterwards you need to reconsider the purpose of Ping(), whether to keep it or reason it's usage.
+*/
+
+type IDb interface {
+	Ping()
+	Populate()
+	GetGuestions() ([]Question, error)
 }
 
-func ping() {
-	pong, err := cli.Ping(ctx).Result()
+type Db struct {
+	ctx context.Context
+	cli *goredis.Client
+	rh  *rejson.Handler
+}
+
+func NewDb(
+	ctx context.Context,
+	cli *goredis.Client,
+	rh *rejson.Handler,
+) *Db {
+	return &Db{
+		ctx: ctx,
+		cli: cli,
+		rh:  rh,
+	}
+}
+
+func (db *Db) Ping() {
+	pong, err := db.cli.Ping(db.ctx).Result()
 	fmt.Println("Redis Ping:")
 	fmt.Println(pong, err)
 
@@ -44,26 +59,7 @@ func ping() {
 	}
 }
 
-// questions
-type Answer struct {
-	Score [2]int `json:"id"`
-	Label string `json:"question_label"`
-}
-
-type Question struct {
-	Id      string   `json:"id"`
-	Label   string   `json:"question_label"`
-	Answers []Answer `json:"answers"`
-}
-
-// results
-type Result struct {
-	Id                    string   `json:"id"`
-	Label                 string   `json:"question_label"`
-	DescriptionParagraphs []string `json:"description_paragraphs"`
-}
-
-func setFromFile(filename string, key string, objType interface{}) error {
+func (db *Db) setFromFile(filename string, key string, objType interface{}) error {
 	jsonFile, err := os.Open(filename)
 	if err != nil {
 		log.Fatalf("Failed to open json file '%s'.\n", filename)
@@ -80,7 +76,7 @@ func setFromFile(filename string, key string, objType interface{}) error {
 
 	json.Unmarshal(byteValue, &objType)
 
-	res, err := rh.JSONSet(key, ".", objType)
+	res, err := db.rh.JSONSet(key, ".", objType)
 	if err != nil {
 		log.Fatalf("Failed to store to redis json bytes with key '%s'.\n", key)
 		return err
@@ -106,17 +102,16 @@ func setFromFile(filename string, key string, objType interface{}) error {
 	return nil
 }
 
-func populate() {
-
+func (db *Db) Populate() {
 	var questions []Question
-	setFromFile("db/data/questions.json", "questions", questions)
+	db.setFromFile("db/data/questions.json", "questions", questions)
 
 	var results []Result
-	setFromFile("db/data/results.json", "results", results)
+	db.setFromFile("db/data/results.json", "results", results)
 }
 
-func GetGuestions() ([]Question, error) {
-	jsonBlob, err := rh.JSONGet("questions", ".")
+func (db *Db) GetGuestions() ([]Question, error) {
+	jsonBlob, err := db.rh.JSONGet("questions", ".")
 	if err != nil {
 		return nil, err
 	}
