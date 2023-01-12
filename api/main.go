@@ -15,6 +15,9 @@ import (
 func setupRouter(db db.IDb) *gin.Engine {
 	router := gin.Default()
 	router.GET("/ping", func(ctx *gin.Context) {
+		// It is more approariate to put the func into it's own file, 'routes/ping.go'.
+		// However this goes easily into very big rabbit hole with better framework, or better use of it.
+		// Right now it's better to keep the code simpler and leave this as-is.
 		ctx.String(200, "pong")
 	})
 	router.GET("/questions", func(ctx *gin.Context) {
@@ -45,13 +48,9 @@ func setupDatabase() *db.Db {
 }
 
 func main() {
-	log.Println("Main.go. Setup database")
 	database := setupDatabase()
-
-	log.Println("Database is ok! setup router")
 	router := setupRouter(database)
 
-	log.Println("Router is done. Let's run it!")
 	router.Run(":8080")
 	log.Println("Start debugging at http://localhost:8080/questions")
 }
