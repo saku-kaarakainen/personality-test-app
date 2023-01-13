@@ -8,6 +8,7 @@ import (
 	goredis "github.com/go-redis/redis/v8" // uses redis7
 	"github.com/nitishm/go-rejson/v4"
 
+	"github.com/saku-kaarakainen/personality-test-app/api/config"
 	"github.com/saku-kaarakainen/personality-test-app/api/db"
 	"github.com/saku-kaarakainen/personality-test-app/api/routes"
 )
@@ -48,6 +49,9 @@ func setupDatabase() *db.Db {
 }
 
 func main() {
+	log.Println("Loading config:")
+	log.Println(config.Title)
+
 	database := setupDatabase()
 	router := setupRouter(database)
 

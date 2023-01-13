@@ -9,6 +9,9 @@ ENV API_FOLDER "/personality-test-api"
 # copy backend files to /personality-test-api - folder 
 COPY api "${API_FOLDER}"
 
+# copy configuration file for backend api
+COPY "config.toml" "${API_FOLDER}/config.toml"
+
 WORKDIR "${API_FOLDER}"
 
 RUN go build -o personality-test-api .
