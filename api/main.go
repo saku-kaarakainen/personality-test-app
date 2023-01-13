@@ -2,12 +2,12 @@ package main
 
 import (
 	"context"
-	"log"
 
 	"github.com/gin-gonic/gin"
 	goredis "github.com/go-redis/redis/v8" // uses redis7
 	"github.com/nitishm/go-rejson/v4"
 
+	"github.com/saku-kaarakainen/personality-test-app/api/config"
 	"github.com/saku-kaarakainen/personality-test-app/api/db"
 	"github.com/saku-kaarakainen/personality-test-app/api/routes"
 )
@@ -30,12 +30,9 @@ func setupDatabase() *db.Db {
 	var (
 		ctx = context.Background()
 		cli = goredis.NewClient(&goredis.Options{
-			// TODO: Add username and password, also .env
-			Addr:     "personality-test-db:6379",
-			Password: "", // no password set
-			DB:       0,  // use default db
-			//Network:     "db-network",
-			//DialTimeout: 60,
+			Addr:     config.Db.Addr,
+			Password: config.Db.Pw,
+			DB:       config.Db.SelectedDb,
 		})
 		rh = rejson.NewReJSONHandler()
 	)
@@ -51,6 +48,5 @@ func main() {
 	database := setupDatabase()
 	router := setupRouter(database)
 
-	router.Run(":8080")
-	log.Println("Start debugging at http://localhost:8080/questions")
+	router.Run(config.Api.Addr)
 }
