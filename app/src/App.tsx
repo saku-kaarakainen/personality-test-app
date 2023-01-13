@@ -1,21 +1,23 @@
-import axios from 'axios';
-import React from 'react';
-import logo from './logo.svg';
+import axios from 'axios'
+import React from 'react'
+import logo from './logo.svg'
 import config from './config.json'
-import './App.css';
+import './App.css'
 
-function App() {
-  const [questions, setQuestions] = React.useState(null);
+function App (): JSX.Element {
+  const [questions, setQuestions] = React.useState(null)
 
   React.useEffect(() => {
-    const fetchData = async () => {
+    const fetchData = async (): Promise<void> => {
       const results = await axios.get(`${config.apiBaseUrl}/questions`)
-      console.log("Got data succesfully:", results.data)
+      console.log('Got data succesfully:', results.data)
       setQuestions(results.data)
+
+      console.log(questions)
     }
 
-    fetchData().catch((error) => console.error("Error in in fetching data:", error))
-   })
+    fetchData().catch((error) => { console.error('Error in in fetching data:', error) })
+  })
 
   return (
     <div className="App">
@@ -34,7 +36,7 @@ function App() {
         </a>
       </header>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

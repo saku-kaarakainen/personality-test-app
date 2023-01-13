@@ -1,0 +1,31 @@
+name: Build and Test App
+on: push
+defaults:
+  run:
+    working-directory: app
+jobs:
+  lint:
+    name: "(app) Lint"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install
+        run: npm ci
+
+      - name: Lint code and styles
+        run: npm run lint
+
+  test:
+    name: "(app) Test"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Install
+        run: npm ci
+      
+      - name: Run unit tests
+        run: npm run test
