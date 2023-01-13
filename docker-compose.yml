@@ -25,6 +25,7 @@ services:
     links:
       - personality-test-db
     container_name: personality-test-api
+    # dockerfile: api.Dockerfile
     networks:
       - db-network
       - api-network
@@ -36,6 +37,7 @@ services:
     links:
       - personality-test-api
     container_name: personality-test-app
+    # dockerfile: app.Dockerfile
     networks:
       - api-network
       
