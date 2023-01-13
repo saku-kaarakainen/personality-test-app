@@ -1,8 +1,8 @@
 version: "2"
 
-# redis requires network
 networks:
    db-network:
+   api-network:
 
 services:
   personality-test-db:
@@ -25,6 +25,19 @@ services:
     links:
       - personality-test-db
     container_name: personality-test-api
+    # dockerfile: api.Dockerfile
     networks:
       - db-network
+      - api-network
+
+  personality-test-app: 
+    image: personality-test-app:latest
+    ports:
+      - 3000:3000
+    links:
+      - personality-test-api
+    container_name: personality-test-app
+    # dockerfile: app.Dockerfile
+    networks:
+      - api-network
       

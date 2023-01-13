@@ -3,11 +3,12 @@ package main
 import (
 	"context"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	goredis "github.com/go-redis/redis/v8" // uses redis7
 	"github.com/nitishm/go-rejson/v4"
 
-	"github.com/saku-kaarakainen/personality-test-app/api/config"
+	"github.com/saku-kaarakainen/personality-test-app/api/api_config"
 	"github.com/saku-kaarakainen/personality-test-app/api/db"
 	"github.com/saku-kaarakainen/personality-test-app/api/routes"
 )
@@ -26,13 +27,19 @@ func setupRouter(db db.IDb) *gin.Engine {
 	return router
 }
 
+func setupRouterMiddleware(router *gin.Engine) {
+	corsConfig := cors.DefaultConfig()
+	corsConfig.AllowOrigins = api_config.Api.AllowOrigins
+	router.Use(cors.New(corsConfig))
+}
+
 func setupDatabase() *db.Db {
 	var (
 		ctx = context.Background()
 		cli = goredis.NewClient(&goredis.Options{
-			Addr:     config.Db.Addr,
-			Password: config.Db.Pw,
-			DB:       config.Db.SelectedDb,
+			Addr:     api_config.Db.Addr,
+			Password: api_config.Db.Pw,
+			DB:       api_config.Db.SelectedDb,
 		})
 		rh = rejson.NewReJSONHandler()
 	)
@@ -47,6 +54,7 @@ func setupDatabase() *db.Db {
 func main() {
 	database := setupDatabase()
 	router := setupRouter(database)
+	setupRouterMiddleware(router)
 
-	router.Run(config.Api.Addr)
+	router.Run(api_config.Api.Addr)
 }

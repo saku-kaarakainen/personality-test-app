@@ -1,4 +1,4 @@
-package config
+package api_config
 
 import (
 	"io/ioutil"
@@ -16,7 +16,8 @@ var (
 )
 
 type ApiConfig struct {
-	Addr string
+	Addr         string
+	AllowOrigins []string
 }
 
 type DbConfig struct {
@@ -39,9 +40,7 @@ func init() {
 		return
 	}
 
-	// The file exists in {repo}/config.toml, but Dockerfile copies it into this api's folder,
-	// where it's accessible here
-	configData, err := ioutil.ReadFile("config.toml")
+	configData, err := ioutil.ReadFile("api_config.toml")
 	if err != nil {
 		panic(err)
 	}

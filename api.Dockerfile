@@ -1,4 +1,5 @@
-FROM golang:1.19-alpine as builder
+# Create docker image for backend
+FROM golang:1.19-alpine as go_builder
 
 # forces using Go modules even if the project is in your GOPATH. Requires go.mod to work.
 ENV GO111MODULE=on
@@ -9,9 +10,6 @@ ENV API_FOLDER "/personality-test-api"
 # copy backend files to /personality-test-api - folder 
 COPY api "${API_FOLDER}"
 
-# copy configuration file for backend api
-COPY "config.toml" "${API_FOLDER}/config.toml"
-
 WORKDIR "${API_FOLDER}"
 
 RUN go build -o personality-test-api .
@@ -20,3 +18,4 @@ EXPOSE 8080
 
 # call docker run . (in api folder)
 CMD [ "go", "run", "." ]
+
