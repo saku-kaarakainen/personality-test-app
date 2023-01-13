@@ -15,9 +15,6 @@ import (
 
 func setupRouter(db db.IDb) *gin.Engine {
 	router := gin.Default()
-	corsConfig := cors.DefaultConfig()
-	corsConfig.AllowOrigins = api_config.Api.AllowOrigins
-	router.Use(cors.New(corsConfig))
 	router.GET("/ping", func(ctx *gin.Context) {
 		// It is more approariate to put the func into it's own file, 'routes/ping.go'.
 		// However this goes easily into very big rabbit hole with better framework, or better use of it.
@@ -28,6 +25,12 @@ func setupRouter(db db.IDb) *gin.Engine {
 		routes.Get_questions(ctx, db)
 	})
 	return router
+}
+
+func setupRouterMiddleware(router *gin.Engine) {
+	corsConfig := cors.DefaultConfig()
+	corsConfig.AllowOrigins = api_config.Api.AllowOrigins
+	router.Use(cors.New(corsConfig))
 }
 
 func setupDatabase() *db.Db {
@@ -51,6 +54,7 @@ func setupDatabase() *db.Db {
 func main() {
 	database := setupDatabase()
 	router := setupRouter(database)
+	setupRouterMiddleware(router)
 
 	router.Run(api_config.Api.Addr)
 }

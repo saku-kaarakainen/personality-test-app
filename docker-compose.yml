@@ -30,7 +30,7 @@ services:
       - db-network
       - api-network
 
-  personality-test-app:
+  personality-test-app: 
     image: personality-test-app:latest
     ports:
       - 3000:3000
