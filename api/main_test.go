@@ -5,16 +5,53 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/saku-kaarakainen/personality-test-app/api/db"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/mock"
 )
 
-func TestPingRoute(t *testing.T) {
-	router := setupRouter()
+type DbEmptyMock struct{ mock.Mock }
 
+func (m *DbEmptyMock) Ping()                                {}
+func (m *DbEmptyMock) Populate()                            {}
+func (m *DbEmptyMock) GetGuestions() ([]db.Question, error) { return nil, nil }
+
+// Test route /ping exists and responds HTTP 200 with "pong"
+func TestPingRoute(t *testing.T) {
+	fakeDb := new(DbEmptyMock)
+	router := setupRouter(fakeDb)
 	w := httptest.NewRecorder()
 	req, _ := http.NewRequest("GET", "/ping", nil)
 	router.ServeHTTP(w, req)
 
 	assert.Equal(t, 200, w.Code)
 	assert.Equal(t, "pong", w.Body.String())
+}
+
+type DbNonEmpty struct{ mock.Mock }
+
+func (m *DbNonEmpty) Ping()     {}
+func (m *DbNonEmpty) Populate() {}
+func (m *DbNonEmpty) GetGuestions() ([]db.Question, error) {
+	return []db.Question{{
+		Id:    "test_id_1",
+		Label: "test_label_1",
+		Answers: []db.Answer{{
+			Id:    "test_id_2",
+			Label: "test_label_2",
+		}},
+	}}, nil
+}
+
+// Test route /questions exists and responds HTTP 200 returns values using db.module
+func TestGetQuestionsRoute(t *testing.T) {
+	fakeDb := new(DbNonEmpty)
+
+	router := setupRouter(fakeDb)
+	w := httptest.NewRecorder()
+	req, _ := http.NewRequest("GET", "/questions", nil)
+	router.ServeHTTP(w, req)
+
+	assert.Equal(t, 200, w.Code)
+	assert.Equal(t, `[{"id":"test_id_1","question_label":"test_label_1","answers":[{"id":"test_id_2","question_label":"test_label_2"}]}]`, w.Body.String())
 }
