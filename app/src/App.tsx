@@ -24,6 +24,8 @@ const App: React.FC = () => {
           <h1>Personality Test App</h1>
         </Header>
         <Content id="app-content">
+          <h2>Are you an introvert or an extrovert?</h2>
+
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<LandingPage />} />
