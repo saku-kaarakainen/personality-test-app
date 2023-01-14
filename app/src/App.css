@@ -1,14 +1,7 @@
-body {
-  font-family: "DM Sans,Helvetica Neue,helvetica,arial,sans-serif;";
-  color: rgb(38, 49, 62);
-  background: #fff;
-}
 
-#app-header.ant-layout-header,
-#app-footer.ant-layout-footer  {
-  color: #ec6584; 
-  background: #fff;
-}
+/*
+ General styles
+*/
 
 h1 {
   font-family: sans-serif;
@@ -16,6 +9,25 @@ h1 {
   font-weight: 500;
   margin: 0;
 }
+
+h2 {
+  font-family:Georgia, 'Times New Roman', Times, serif;
+  font-size: 36px;
+  font-weight: 500;
+  letter-spacing: normal;
+  line-height: 45px;
+}
+
+#app-header.ant-layout-header,
+#app-footer.ant-layout-foote,
+h1 > a, h1 > a:hover  {
+  color: #ec6584; 
+  background: #fff;
+}
+
+/*
+ Layout styles
+*/
 
 .ant-layout-footer {
   line-height: 1.5;
@@ -30,6 +42,42 @@ h1 {
   padding: 0 50px;
 }
 
-.code-box-demo > .ant-layout + .ant-layout {
-  margin-top: 48px;
+/*
+ General, component specific styles
+*/
+
+button.ant-btn {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  background-color: #0c2b4f;
+  border: #455A74 solid 1px;
+  padding: 20px 40px 18px;
+  display: flex;
+  border-radius: 0.25rem;
+  min-width: 225px;
+  min-height: 50px;
+  padding: 1.125rem .5rem 1rem;
+  transition: "background-color 350ms cubic-bezier(.215,.61,.355,1),border-color 350ms cubic-bezier(.25,.46,.45,.94),color 350ms cubic-bezier(.215,.61,.355,1)";
+  overflow: visible;
+  align-items: center;
+  justify-content: center;
+}
+
+button.ant-btn-primary:not(:disabled):hover {
+  color: #fff;
+  background-color: #4a5f78;
+}
+
+button.ant-btn-primary:disabled {
+    background-color: #ccd6e0;
+    cursor: not-allowed;
+}
+
+button.ant-btn > * {
+  text-align: center;
+  font-weight: 500;
+  color: #fff;
+  box-sizing: border-box;
+  display: inline-block;
+  display: flex;
 }
