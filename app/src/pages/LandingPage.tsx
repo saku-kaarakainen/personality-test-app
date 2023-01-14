@@ -10,7 +10,7 @@ const LandingPage: React.FC = () => {
 
   return <Space>
     <Button type="primary" onClick={routeChange}>
-      <span>Take a test</span>
+      <span id="start-test">Take a test</span>
       </Button>
   </Space>
 }

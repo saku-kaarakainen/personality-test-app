@@ -23,7 +23,7 @@ const App: React.FC = () => {
         <Layout>
           <Header id="app-header">
             <h1>
-              <Link to="/">Personality Test App</Link>
+              <Link id="title-link" to="/">Personality Test App</Link>
             </h1>
           </Header>
           <Content id="app-content">
