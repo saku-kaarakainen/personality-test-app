@@ -1,10 +1,18 @@
 import axios from 'axios'
 import React from 'react'
-import logo from './logo.svg'
+import { Layout } from 'antd'
 import config from './config.json'
 import './App.css'
 
-function App (): JSX.Element {
+const { Header, Footer, Content } = Layout
+
+// TODO:
+// use breadcrumb
+// https://ant.design/components/breadcrumb
+
+// Radiobutton
+
+const App: React.FC = () => {
   const [questions, setQuestions] = React.useState(null)
 
   React.useEffect(() => {
@@ -20,22 +28,20 @@ function App (): JSX.Element {
   })
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      {/* Only one layout, that is mobile-friendly */}
+      <Layout>
+        <Header id="app-header">
+          <h1>Personality Test App</h1>
+        </Header>
+        <Content id="app-content">
+          <p>Content placeholder</p>
+        </Content>
+        <Footer id="app-footer">
+
+        </Footer>
+      </Layout>
+    </>
   )
 }
 
