@@ -3,13 +3,14 @@ package db
 // questions
 type Answer struct {
 	Id    string `json:"id"`
-	Label string `json:"question_label"`
+	Label string `json:"answer_label"`
 }
 
 type Question struct {
-	Id      string   `json:"id"`
-	Label   string   `json:"question_label"`
-	Answers []Answer `json:"answers"`
+	Id          string   `json:"id"`
+	Text        string   `json:"question_text"`
+	Description string   `json:"question_description"`
+	Answers     []Answer `json:"answers"`
 }
 
 // results

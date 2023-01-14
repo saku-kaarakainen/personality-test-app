@@ -1,7 +1,8 @@
 [
     {
         "id": "1",
-        "question_label": "You’re really busy at work and a colleague is telling you their life story and personal woes. You:",
+        "question_text": "You’re really busy at work and a colleague is telling you their life story and personal woes. You:",
+        "question_description": "All questions are required",
         "answers": [
             {
                 "id": "1",
@@ -23,7 +24,8 @@
     },
     {
         "id": "1",
-        "question_label": "You’ve been sitting in the doctor’s waiting room for more than 25 minutes. You:",
+        "question_text": "You’ve been sitting in the doctor’s waiting room for more than 25 minutes. You:",
+        "question_description": "All questions are required",
         "answers": [
             {
                 "id": "1",
@@ -45,7 +47,8 @@
     },
     {
         "id": "1",
-        "question_label": "You’re having an animated discussion with a colleague regarding a project that you’re in charge of. You:",
+        "question_text": "You’re having an animated discussion with a colleague regarding a project that you’re in charge of. You:",
+        "question_description": "All questions are required",
         "answers": [
             {
                 "id": "5",
@@ -67,7 +70,8 @@
     },
     {
         "id": "1",
-        "question_label": "You are taking part in a guided tour of a museum. You:",
+        "question_text": "You are taking part in a guided tour of a museum. You:",
+        "question_description": "All questions are required",
         "answers": [
             {
                 "id": "9",
@@ -89,7 +93,8 @@
     },
     {
         "id": "1",
-        "question_label": "During dinner parties at your home, you have a hard time with people who:",
+        "question_text": "During dinner parties at your home, you have a hard time with people who:",
+        "question_description": "All questions are required",
         "answers": [
             {
                 "id": "13",
@@ -111,7 +116,8 @@
     },
     {
         "id": "1",
-        "question_label": "You crack a joke at work, but nobody seems to have noticed. You:",
+        "question_text": "You crack a joke at work, but nobody seems to have noticed. You:",
+        "question_description": "All questions are required",
         "answers": [
             {
                 "id": "17",

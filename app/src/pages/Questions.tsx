@@ -1,9 +1,11 @@
 import React from 'react'
 import axios from 'axios'
 import config from './../config.json'
+import Question, { QuestionSet } from '../components/Question'
 
 const Questions: React.FC = () => {
-  const [questions, setQuestions] = React.useState(null)
+  const [questions, setQuestions] = React.useState(new Array<QuestionSet>())
+  const [currentStep, setCurrentStep] = React.useState(0)
 
   React.useEffect(() => {
     const fetchData = async (): Promise<void> => {
@@ -17,7 +19,12 @@ const Questions: React.FC = () => {
     fetchData().catch((error) => { console.error('Error in in fetching data:', error) })
   })
 
-  return <p>Page Results - Questions</p>
+  /* 
+    TODO: 
+     - next question
+     - previous question
+     - tests
+  */
+  return <Question questions={questions} currentStep={currentStep} />
 }
 
-export default Questions
