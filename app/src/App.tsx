@@ -31,9 +31,15 @@ const App: React.FC = () => {
     <>
       {/* Only one layout, that is mobile-friendly */}
       <Layout>
-        <Header id="app-header"><h1>Personality Test App</h1></Header>
-        <Content id="app-content">Content</Content>
-        <Footer id="app-footer"></Footer>
+        <Header id="app-header">
+          <h1>Personality Test App</h1>
+        </Header>
+        <Content id="app-content">
+          <p>Content placeholder</p>
+        </Content>
+        <Footer id="app-footer">
+
+        </Footer>
       </Layout>
     </>
   )

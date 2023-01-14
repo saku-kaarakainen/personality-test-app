@@ -1,6 +1,8 @@
-//import React from 'react'
+import React from 'react'
 
-function Question (): JSX.Element {
-    return <>
-    </>
+const Question: React.FC = () => {
+  return <>
+  </>
 }
+
+export default Question
