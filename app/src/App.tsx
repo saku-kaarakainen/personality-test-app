@@ -1,7 +1,10 @@
-import axios from 'axios'
 import React from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Layout } from 'antd'
-import config from './config.json'
+import LandingPage from './pages/LandingPage'
+import Questions from './pages/Questions'
+import Result from './pages/Result'
+import NotFound from './pages/NotFound'
 import './App.css'
 
 const { Header, Footer, Content } = Layout
@@ -13,20 +16,6 @@ const { Header, Footer, Content } = Layout
 // Radiobutton
 
 const App: React.FC = () => {
-  const [questions, setQuestions] = React.useState(null)
-
-  React.useEffect(() => {
-    const fetchData = async (): Promise<void> => {
-      const results = await axios.get(`${config.apiBaseUrl}/questions`)
-      console.log('Got data succesfully:', results.data)
-      setQuestions(results.data)
-
-      console.log(questions)
-    }
-
-    fetchData().catch((error) => { console.error('Error in in fetching data:', error) })
-  })
-
   return (
     <>
       {/* Only one layout, that is mobile-friendly */}
@@ -35,7 +24,14 @@ const App: React.FC = () => {
           <h1>Personality Test App</h1>
         </Header>
         <Content id="app-content">
-          <p>Content placeholder</p>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<LandingPage />} />
+              <Route path="questions" element={<Questions />} />
+              <Route path="result" element={<Result />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
         </Content>
         <Footer id="app-footer">
 
