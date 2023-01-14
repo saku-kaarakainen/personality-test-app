@@ -5,6 +5,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/gin-gonic/gin"
 	"github.com/saku-kaarakainen/personality-test-app/api/db"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
@@ -19,7 +20,8 @@ func (m *DbEmptyMock) GetGuestions() ([]db.Question, error) { return nil, nil }
 // Test route /ping exists and responds HTTP 200 with "pong"
 func TestPingRoute(t *testing.T) {
 	fakeDb := new(DbEmptyMock)
-	router := setupRouter(fakeDb)
+	router := gin.Default()
+	setupRoutes(router, fakeDb)
 	w := httptest.NewRecorder()
 	req, _ := http.NewRequest("GET", "/ping", nil)
 	router.ServeHTTP(w, req)
@@ -46,8 +48,8 @@ func (m *DbNonEmpty) GetGuestions() ([]db.Question, error) {
 // Test route /questions exists and responds HTTP 200 returns values using db.module
 func TestGetQuestionsRoute(t *testing.T) {
 	fakeDb := new(DbNonEmpty)
-
-	router := setupRouter(fakeDb)
+	router := gin.Default()
+	setupRoutes(router, fakeDb)
 	w := httptest.NewRecorder()
 	req, _ := http.NewRequest("GET", "/questions", nil)
 	router.ServeHTTP(w, req)

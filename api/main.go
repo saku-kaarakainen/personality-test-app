@@ -13,8 +13,7 @@ import (
 	"github.com/saku-kaarakainen/personality-test-app/api/routes"
 )
 
-func setupRouter(db db.IDb) *gin.Engine {
-	router := gin.Default()
+func setupRoutes(router *gin.Engine, db db.IDb) {
 	router.GET("/ping", func(ctx *gin.Context) {
 		// It is more approariate to put the func into it's own file, 'routes/ping.go'.
 		// However this goes easily into very big rabbit hole with better framework, or better use of it.
@@ -24,7 +23,6 @@ func setupRouter(db db.IDb) *gin.Engine {
 	router.GET("/questions", func(ctx *gin.Context) {
 		routes.Get_questions(ctx, db)
 	})
-	return router
 }
 
 func setupRouterMiddleware(router *gin.Engine) {
@@ -53,8 +51,9 @@ func setupDatabase() *db.Db {
 
 func main() {
 	database := setupDatabase()
-	router := setupRouter(database)
+	router := gin.Default()
 	setupRouterMiddleware(router)
+	setupRoutes(router, database)
 
 	router.Run(api_config.Api.Addr)
 }
