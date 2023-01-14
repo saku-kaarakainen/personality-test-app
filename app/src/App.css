@@ -3,12 +3,6 @@
  General styles
 */
 
-#app-header.ant-layout-header,
-#app-footer.ant-layout-footer  {
-  color: #ec6584; 
-  background: #fff;
-}
-
 h1 {
   font-family: sans-serif;
   font-size: 1.6rem;
@@ -24,6 +18,12 @@ h2 {
   line-height: 45px;
 }
 
+#app-header.ant-layout-header,
+#app-footer.ant-layout-foote,
+h1 > a, h1 > a:hover  {
+  color: #ec6584; 
+  background: #fff;
+}
 
 /*
  Layout styles

@@ -1,9 +1,17 @@
 import React from 'react'
 import { Button, Space } from 'antd'
+import { useNavigate } from 'react-router-dom'
 
 const LandingPage: React.FC = () => {
+  const navigate = useNavigate()
+  const routeChange = (): void => {
+    navigate('Questions')
+  }
+
   return <Space>
-    <Button type="primary"><span>Take a test</span></Button>
+    <Button type="primary" onClick={routeChange}>
+      <span>Take a test</span>
+      </Button>
   </Space>
 }
 
