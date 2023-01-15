@@ -1,5 +1,6 @@
 import React from 'react'
 import axios from 'axios'
+import { Button, Col, Row } from 'antd'
 import config from './../config.json'
 import Question, { QuestionSet } from '../components/Question'
 
@@ -30,10 +31,24 @@ const Questions: React.FC = () => {
     return <></>
   }
 
-  return <Question
-    questions={questions}
-    currentStep={currentStep}
-    maxSteps={maxSteps} />
+  return (<>
+    <Row>
+      <Col span={24}>
+      <Question
+        questions={questions}
+        currentStep={currentStep}
+        maxSteps={maxSteps} />
+      </Col>
+    </Row>
+    <Row>
+      <Col span={12}>
+        <Button />
+      </Col>
+      <Col span={12}>
+        <Button />
+      </Col>
+    </Row>
+  </>)
 }
 
 export default Questions
