@@ -3,19 +3,26 @@
  General styles
 */
 
+h1, h2, h3, h4, h5, h6 {
+  font-family:Georgia, 'Times New Roman', Times, serif;
+  font-weight: 500;
+  letter-spacing: normal;
+}
+
 h1 {
   font-family: sans-serif;
   font-size: 1.6rem;
-  font-weight: 500;
   margin: 0;
 }
 
 h2 {
-  font-family:Georgia, 'Times New Roman', Times, serif;
   font-size: 36px;
-  font-weight: 500;
-  letter-spacing: normal;
   line-height: 45px;
+}
+
+h3 {
+  font-size: 18px;
+  line-height: 22.5px;
 }
 
 #app-header.ant-layout-header,

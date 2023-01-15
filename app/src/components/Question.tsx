@@ -1,5 +1,6 @@
 import React from 'react'
-import { Radio, Space } from 'antd'
+import { Breadcrumb, Radio, Space } from 'antd'
+import './Question.css'
 
 export interface QuestionSet {
   id: string
@@ -11,16 +12,16 @@ export interface QuestionSet {
   }>
 }
 
-interface QuestionProps {
+const Question: React.FC< {
   questions: QuestionSet[]
   currentStep: number
-}
-
-const Question: React.FC<QuestionProps> = (props: QuestionProps) => {
-  console.log('currentStep:', props.currentStep)
-
-  const currentQuestion = props.questions[props.currentStep]
-  console.log('currentQuestion:', currentQuestion)
+  maxSteps: number
+}> = ({
+  currentStep,
+  questions,
+  maxSteps
+}) => {
+  const currentQuestion = questions[currentStep]
 
   /*
     TODO:
@@ -28,14 +29,22 @@ const Question: React.FC<QuestionProps> = (props: QuestionProps) => {
      - pass radiobutton value to parent
   */
   return <>
+    <Breadcrumb>
+      <Breadcrumb.Item className="question-breadcrumb">Question {currentStep}/{maxSteps}</Breadcrumb.Item>
+    </Breadcrumb>
+
     <h3 className="question-text">{currentQuestion.question_text}</h3>
     <div className="question-description">
       <span>{currentQuestion.question_description}</span>
     </div>
-    <Radio.Group>
+    <Radio.Group className='question-group'>
       <Space direction='vertical'>
         {currentQuestion.answers.map(a => {
-          return <Radio value={a.id} key={a.id}>{a.answer_label}</Radio>
+          return <Radio value={a.id} key={`key-${a.id}`}>
+            <div className='question-item'>
+              <span className="question-item-text">{a.answer_label}</span>
+            </div>
+          </Radio>
         })}
       </Space>
     </Radio.Group>

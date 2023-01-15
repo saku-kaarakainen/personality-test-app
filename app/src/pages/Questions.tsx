@@ -5,26 +5,18 @@ import Question, { QuestionSet } from '../components/Question'
 
 const Questions: React.FC = () => {
   const [questions, setQuestions] = React.useState(new Array<QuestionSet>())
-  const [currentStep, setCurrentStep] = React.useState(0)
-
-  const notTrue = false
-  if (notTrue) {
-    setCurrentStep(0)
-  }
+  const [currentStep] = React.useState(1)
+  const [maxSteps, setMaxSteps] = React.useState(1)
 
   React.useEffect(() => {
     const fetchData = async (): Promise<void> => {
       const results = await axios.get(`${config.apiBaseUrl}/questions`)
-      console.log('Got data succesfully:', results.data)
-
-      const qsts: QuestionSet[] = results.data
-      setQuestions(qsts)
-
-      console.log(questions)
+      setQuestions(results.data)
+      setMaxSteps(questions.length)
     }
 
     fetchData().catch((error) => { console.error('Error in in fetching data:', error) })
-  })
+  }, [])
 
   /*
     TODO:
@@ -32,7 +24,16 @@ const Questions: React.FC = () => {
      - previous question
      - tests
   */
-  return <Question questions={questions} currentStep={currentStep} />
+
+  if (questions.length === 0) {
+    // TODO: Show loading spinner, when the results are not available
+    return <></>
+  }
+
+  return <Question
+    questions={questions}
+    currentStep={currentStep}
+    maxSteps={maxSteps} />
 }
 
 export default Questions

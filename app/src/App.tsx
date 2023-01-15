@@ -9,12 +9,6 @@ import './App.css'
 
 const { Header, Footer, Content } = Layout
 
-// TODO:
-// use breadcrumb
-// https://ant.design/components/breadcrumb
-
-// Radiobutton
-
 const App: React.FC = () => {
   return (
     <>
