@@ -36,8 +36,8 @@ func (m *DbNonEmpty) Ping()     {}
 func (m *DbNonEmpty) Populate() {}
 func (m *DbNonEmpty) GetGuestions() ([]db.Question, error) {
 	return []db.Question{{
-		Id:    "test_id_1",
-		Label: "test_label_1",
+		Id:   "test_id_1",
+		Text: "test_text_1",
 		Answers: []db.Answer{{
 			Id:    "test_id_2",
 			Label: "test_label_2",
@@ -55,5 +55,5 @@ func TestGetQuestionsRoute(t *testing.T) {
 	router.ServeHTTP(w, req)
 
 	assert.Equal(t, 200, w.Code)
-	assert.Equal(t, `[{"id":"test_id_1","question_label":"test_label_1","answers":[{"id":"test_id_2","question_label":"test_label_2"}]}]`, w.Body.String())
+	assert.Equal(t, `[{"id":"test_id_1","question_text":"test_text_1","question_description":"","answers":[{"id":"test_id_2","answer_label":"test_label_2"}]}]`, w.Body.String())
 }
