@@ -7,11 +7,18 @@ const Questions: React.FC = () => {
   const [questions, setQuestions] = React.useState(new Array<QuestionSet>())
   const [currentStep, setCurrentStep] = React.useState(0)
 
+  const notTrue = false
+  if (notTrue) {
+    setCurrentStep(0)
+  }
+
   React.useEffect(() => {
     const fetchData = async (): Promise<void> => {
       const results = await axios.get(`${config.apiBaseUrl}/questions`)
       console.log('Got data succesfully:', results.data)
-      setQuestions(results.data)
+
+      const qsts: QuestionSet[] = results.data
+      setQuestions(qsts)
 
       console.log(questions)
     }
@@ -19,8 +26,8 @@ const Questions: React.FC = () => {
     fetchData().catch((error) => { console.error('Error in in fetching data:', error) })
   })
 
-  /* 
-    TODO: 
+  /*
+    TODO:
      - next question
      - previous question
      - tests
@@ -28,3 +35,4 @@ const Questions: React.FC = () => {
   return <Question questions={questions} currentStep={currentStep} />
 }
 
+export default Questions

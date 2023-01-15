@@ -1,34 +1,44 @@
 import React from 'react'
+import { Radio, Space } from 'antd'
 
-export type QuestionSet = {
-  id: string,
-  question_text: string,
-  question_description: string,
-  answers: {
-    id: string,
+export interface QuestionSet {
+  id: string
+  question_text: string
+  question_description: string
+  answers: Array<{
+    id: string
     answer_label: string
-  }
+  }>
 }
 
-type QuestionProps = {
-  questions: QuestionSet[],
+interface QuestionProps {
+  questions: QuestionSet[]
   currentStep: number
 }
 
 const Question: React.FC<QuestionProps> = (props: QuestionProps) => {
-  console.log("currentStep:", props.currentStep)
-  
+  console.log('currentStep:', props.currentStep)
+
   const currentQuestion = props.questions[props.currentStep]
-  console.log("currentQuestion:", currentQuestion)
+  console.log('currentQuestion:', currentQuestion)
 
   /*
     TODO:
      - current step breadcrump
-     - questions as radiobuttons
      - pass radiobutton value to parent
   */
   return <>
-    {currentQuestion}
+    <h3 className="question-text">{currentQuestion.question_text}</h3>
+    <div className="question-description">
+      <span>{currentQuestion.question_description}</span>
+    </div>
+    <Radio.Group>
+      <Space direction='vertical'>
+        {currentQuestion.answers.map(a => {
+          return <Radio value={a.id} key={a.id}>{a.answer_label}</Radio>
+        })}
+      </Space>
+    </Radio.Group>
   </>
 }
 
