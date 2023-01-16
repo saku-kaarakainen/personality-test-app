@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { Button, Row, Col } from 'antd'
 import config from './../config.json'
@@ -6,6 +7,7 @@ import Question, { QuestionSet } from '../components/Question'
 import './Questions.css'
 
 const Questions: React.FC = () => {
+  const navigate = useNavigate()
   const [questions, setQuestions] = React.useState(new Array<QuestionSet>())
   const [currentStep, setCurrentStep] = React.useState(0)
 
@@ -25,26 +27,22 @@ const Questions: React.FC = () => {
   }
 
   const onPrevClick = (): void => {
-    // if index is 1 or 2, set to 1
     if (currentStep < 1) {
-      console.log('set first page')
-
       // First step, reset to default
       setCurrentStep(0)
+      navigate('/')
       return
     }
 
-    console.log('set prev page')
     setCurrentStep(currentStep - 1)
   }
 
   const onNextClick = (): void => {
     const lastIndex = questions.length - 1
-
     if (currentStep < lastIndex) {
       setCurrentStep(currentStep + 1)
     } else {
-      console.log('send results')
+      navigate('/Result')
     }
   }
 

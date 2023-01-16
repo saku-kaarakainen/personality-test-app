@@ -23,11 +23,6 @@ const Question: React.FC< {
 }) => {
   const currentQuestion = questions[currentStep]
 
-  /*
-    TODO:
-     - current step breadcrump
-     - pass radiobutton value to parent
-  */
   return <>
     <Breadcrumb>
       <Breadcrumb.Item className="question-breadcrumb">Question {currentStep + 1}/{maxSteps}</Breadcrumb.Item>
