@@ -30,7 +30,7 @@ const Question: React.FC< {
   */
   return <>
     <Breadcrumb>
-      <Breadcrumb.Item className="question-breadcrumb">Question {currentStep}/{maxSteps}</Breadcrumb.Item>
+      <Breadcrumb.Item className="question-breadcrumb">Question {currentStep + 1}/{maxSteps}</Breadcrumb.Item>
     </Breadcrumb>
 
     <h3 className="question-text">{currentQuestion.question_text}</h3>
