@@ -1,17 +1,17 @@
 
-/* breadcrumb style */
+/* breadcrumb styles */
 span.question-breadcrumb {
     font-size: 12px;
     font-weight: 400;
     color: #26313e;
 }
 
-/* question text style */
+/* question text styles */
 h3 {
     margin-top: 16px;
 }
 
-/* question description style */
+/* question description styles */
 .question-description {
     display: flex;
 }
@@ -23,67 +23,33 @@ h3 {
     font-size: 0.8rem;
 }
 
-.ant-space-item {
+/* radio button styles */
+
+.question-group .ant-space-item {
     border: 0.0625rem solid #ccd6e0;
     border-radius: 0.25rem;
     display: flex;
     padding: 12px;   
 }
 
-.ant-space-item:has(.ant-radio-checked) {
+.question-group .ant-space-item:has(.ant-radio-checked) {
     border-color: #EC6584;
 }
 
-.ant-radio-wrapper {
+.question-group .ant-radio-wrapper {
     display: flex;
     flex-grow: 1;
 }
 
-.ant-radio .ant-radio-inner {
+.question-group .ant-radio .ant-radio-inner {
     align-items: center;
     background-color: #f5f7f9;
     border-radius: 0.125rem;
     color: #26313e;
 }
 
-
-
-.ant-radio.ant-radio-checked .ant-radio-inner {
+.question-group .ant-radio.ant-radio-checked .ant-radio-inner {
     background-color: #EC6584;
     border-color: #EC6584;
     color: #EC6584;
 }
-
-
-/* question button style */
-/*
-.ant-radio-group.question-group label {
-    display: flex;
-    flex: 1;
-}
-
-.ant-radio-group.question-group label + span {
-    all:inherit;
-}
-
- .ant-radio-group.question-group label span:last-child {
-    width: 100%;
-    display: flex;
-}
-
-.question-group .question-item {
-    all: inherit
-} 
-
-
-.question-item-index span {
-    display: block;
-}
-
-
-.question-item-index {
-    border: solid 1px black;
-    display: flex;
-    margin: 10px;
-}
-*/
