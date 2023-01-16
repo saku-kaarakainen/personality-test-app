@@ -56,8 +56,6 @@ h1 > a, h1 > a:hover  {
 button.ant-btn {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 16px;
-  background-color: #0c2b4f;
-  border: #455A74 solid 1px;
   padding: 20px 40px 18px;
   display: flex;
   border-radius: 0.25rem;
@@ -70,8 +68,19 @@ button.ant-btn {
   justify-content: center;
 }
 
+button.ant-btn-primary {
+  background-color: #0c2b4f;
+  border: #455A74 solid 1px;
+}
+
+button.ant-btn:not(:disabled):hover {
+  color: #ec6584;
+  border-color: #ec6584;
+}
+
 button.ant-btn-primary:not(:disabled):hover {
   color: #fff;
+  border-color: #4a5f78;
   background-color: #4a5f78;
 }
 
@@ -80,7 +89,7 @@ button.ant-btn-primary:disabled {
     cursor: not-allowed;
 }
 
-button.ant-btn > * {
+button.ant-btn-primary > * {
   text-align: center;
   font-weight: 500;
   color: #fff;

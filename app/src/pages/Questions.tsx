@@ -1,8 +1,9 @@
 import React from 'react'
 import axios from 'axios'
-import { Button, Col, Row } from 'antd'
+import { Button, Row, Col } from 'antd'
 import config from './../config.json'
 import Question, { QuestionSet } from '../components/Question'
+import './Questions.css'
 
 const Questions: React.FC = () => {
   const [questions, setQuestions] = React.useState(new Array<QuestionSet>())
@@ -33,20 +34,16 @@ const Questions: React.FC = () => {
 
   return (<>
     <Row>
-      <Col span={24}>
-      <Question
-        questions={questions}
-        currentStep={currentStep}
-        maxSteps={maxSteps} />
+      <Col span={24} className='col-question'>
+        <Question
+          questions={questions}
+          currentStep={currentStep}
+          maxSteps={maxSteps} />
       </Col>
     </Row>
     <Row>
-      <Col span={12}>
-        <Button />
-      </Col>
-      <Col span={12}>
-        <Button />
-      </Col>
+      <Col span={12} className='col-prev'><Button>Previous</Button></Col>
+      <Col span={12} className='col-next'><Button type="primary">Next</Button></Col>
     </Row>
   </>)
 }

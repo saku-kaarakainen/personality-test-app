@@ -1,0 +1,15 @@
+.col-next, 
+.col-prev {
+    margin-top: 12px;
+    display: flex;
+    flex: 0;
+}
+
+.col-prev {
+    margin-right: 12px;
+}
+
+.col-next {
+    justify-content: flex-start;
+}
+
