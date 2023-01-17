@@ -1,0 +1,24 @@
+.result-container h3 {
+    margin-top: 3em;
+    font-size: 18px;
+    font-style: italic;
+    line-height: 22.5px;
+    text-align: center;
+}
+
+.result-container h4 {
+    margin-top: 1rem;
+    font-size: 36px;
+    line-height: 45px;
+    text-align: center;
+}
+
+.result-container .result-text {
+    font-size: 16px;
+    line-height: 22.8px;
+}
+
+.result-container .go-home-area {
+    display: flex;
+    justify-content: center;
+}
