@@ -7,6 +7,7 @@ import (
 	"github.com/saku-kaarakainen/personality-test-app/api/db"
 )
 
+// TODO: Move the func to a better place
 func AbortMsg(code int, err error, c *gin.Context) {
 	c.String(code, "An error occurred")
 	// A custom error page with HTML templates can be shown by c.HTML()

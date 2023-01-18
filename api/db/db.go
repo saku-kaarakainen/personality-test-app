@@ -26,9 +26,16 @@ import (
 */
 
 type IDb interface {
+	// Config / Admin
 	Ping()
 	Populate()
+
+	// Questions
 	GetGuestions() ([]Question, error)
+
+	// Results
+	GetPoint(key string, value string) ([2]int32, error)
+	GetResult(score [2]int32) (Result, error)
 }
 
 type Db struct {
@@ -48,6 +55,8 @@ func NewDb(
 		rh:  rh,
 	}
 }
+
+// DDD: Admin / Config
 
 func (db *Db) Ping() {
 	pong, err := db.cli.Ping(db.ctx).Result()
@@ -110,6 +119,8 @@ func (db *Db) Populate() {
 	db.setFromFile("db/data/results.json", "results", results)
 }
 
+// DDD: Questions
+
 func (db *Db) GetGuestions() ([]Question, error) {
 	jsonBlob, err := db.rh.JSONGet("questions", ".")
 	if err != nil {
@@ -120,4 +131,25 @@ func (db *Db) GetGuestions() ([]Question, error) {
 	json.Unmarshal(jsonBlob.([]byte), &data)
 
 	return data, nil
+}
+
+// DDD: Result
+
+func (db *Db) GetPoint(key string, value string) ([2]int32, error) {
+	path := fmt.Sprintf("$.[?(@.id==\"%s\")].answers[?(@.id==\"%s\")].score", key, value)
+	jsonBlob, err := db.rh.JSONGet("questions", path)
+	if err != nil {
+		log.Println("err:")
+		log.Println(err)
+		return [2]int32{0, 0}, err
+	}
+
+	var data [1][2]int32
+	json.Unmarshal(jsonBlob.([]byte), &data)
+
+	return data[0], nil
+}
+
+func (db *Db) GetResult(score [2]int32) (Result, error) {
+	return Result{}, errors.New("not implemented GetResult")
 }
