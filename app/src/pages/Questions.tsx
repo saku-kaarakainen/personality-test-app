@@ -6,7 +6,7 @@ import config from './../config.json'
 import Question, { QuestionSet } from '../components/Question'
 import './Questions.css'
 
-interface AnswerSet {
+export interface AnswerSet {
   question_id: string
   answer: string
 }
@@ -38,7 +38,10 @@ const Questions: React.FC = () => {
       }
     }
 
-    fetchData().catch((error) => { console.error('Error in in fetching data:', error) })
+    fetchData()
+      .catch((error) => {
+        console.error('Error in in fetching data:', error)
+      })
   }, [questions])
 
   // Logic to check if navigation to next page/step is allowed
@@ -78,7 +81,11 @@ const Questions: React.FC = () => {
     if (currentStep < lastIndex) {
       setCurrentStep(currentStep + 1)
     } else {
-      navigate('/Result')
+      navigate('/Result', {
+        state: {
+          answers
+        }
+      })
     }
   }
 
