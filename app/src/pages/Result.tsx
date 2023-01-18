@@ -31,7 +31,9 @@ const Result: React.FC = () => {
   })
 
   // Mock class for until the API endpoint is implemented
-  const get = async (_axios: AxiosStatic, _url: string): Promise<any> => {
+  const get = async (_axios: AxiosStatic, url: string): Promise<any> => {
+    console.log('Mocking request to url: ', url)
+
     return await Promise.resolve({
       data: {
         // Mocked result
