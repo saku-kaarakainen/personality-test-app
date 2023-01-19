@@ -26,7 +26,7 @@ func TestGetResult(t *testing.T) {
 			i, tt.score, tt.expectedFlag)
 
 		t.Run(testname, func(t *testing.T) {
-			actualFlag := ConvertScoreToFlag(tt.score)
+			actualFlag := convertScoreToFlag(tt.score)
 			assert.Equal(t, tt.expectedFlag, actualFlag)
 		})
 	}

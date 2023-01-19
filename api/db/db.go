@@ -149,9 +149,18 @@ func (db *Db) GetPoint(key string, value string) ([2]int32, error) {
 }
 
 func (db *Db) GetResult(score [2]int32) (Result, error) {
-	ConvertScoreToFlag(score)
+	flag := convertScoreToFlag(score)
 
-	panic(errors.New("not implemented"))
+	path := fmt.Sprintf("$.[?(@.score==%d)]", flag)
+	jsonBlob, err := db.rh.JSONGet("results", path)
+	if err != nil {
+		return Result{}, err
+	}
+
+	var data []Result
+	json.Unmarshal(jsonBlob.([]byte), &data)
+
+	return data[0], nil
 }
 
 // Converts two dimensional score into binary flag.
@@ -164,7 +173,7 @@ func (db *Db) GetResult(score [2]int32) (Result, error) {
 // you can optimize the code furthermode with using this one liner instead:
 //
 //	return (int32((-score[0]>>31)&1) | (int32((-score[1]>>31)&1) << 1))
-func ConvertScoreToFlag(score [2]int32) int32 {
+func convertScoreToFlag(score [2]int32) int32 {
 	x_flag := score[0] >= 0
 	y_flag := score[1] >= 0
 

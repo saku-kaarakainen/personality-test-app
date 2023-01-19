@@ -49,7 +49,5 @@ func Get_Result_Calculate(ctx *gin.Context, db db.IDb) {
 		return
 	}
 
-	log.Println("result:")
-	log.Println(result)
-	ctx.String(420, "An error occurred")
+	ctx.JSON(200, result)
 }
