@@ -3,6 +3,7 @@ package db
 // questions
 type Answer struct {
 	Id    string `json:"id"`
+	Score [2]int `json:"score"`
 	Label string `json:"answer_label"`
 }
 
@@ -16,6 +17,6 @@ type Question struct {
 // results
 type Result struct {
 	Id                    string   `json:"id"`
-	Label                 string   `json:"question_label"`
+	Label                 string   `json:"label"`
 	DescriptionParagraphs []string `json:"description_paragraphs"`
 }

@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"log"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -22,6 +23,10 @@ func setupRoutes(router *gin.Engine, db db.IDb) {
 	})
 	router.GET("/questions", func(ctx *gin.Context) {
 		routes.Get_questions(ctx, db)
+	})
+	router.GET("result/calculate", func(ctx *gin.Context) {
+		log.Println("We found route for calculate")
+		routes.Get_Result_Calculate(ctx, db)
 	})
 }
 
