@@ -18,6 +18,7 @@ func Unformat(template string, input string) (string, error) {
 	// 115 = s
 	sep_bytes := [2]byte{37, 115}
 
+	// The logs are left in the comments for purpose, in case you need to debug this.
 	for i := 0; i < len(input); i++ {
 		// log.Printf("Comparing '%s' with '%s' at index '%d'.\n", string(input[i]), string(template[i]), i)
 		// byte comparison

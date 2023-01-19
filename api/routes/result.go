@@ -9,34 +9,20 @@ import (
 )
 
 func Get_Result_Calculate(ctx *gin.Context, db db.IDb) {
-	log.Println("Entered method Get Result Calculate")
 	score := [2]int32{0, 0}
 
-	log.Println("We are iterating keys:")
-	log.Println(ctx.Request.URL.Query())
-
+	// Note: "Business logic"
 	for raw_key, value_array := range ctx.Request.URL.Query() {
-		format := "q[%s]"
 		// Get the index from the url parameter
-		//raw_key := "q[3]"
-		key, err := utils.Unformat(format, raw_key)
+		key, err := utils.Unformat("q[%s]", raw_key)
 		if err != nil {
 			log.Printf("Skipped key '%s'.\n", key)
 			continue
 		}
 
-		log.Println(key)
-		// expected output: 3
-
 		// Get the key and value from the param
 		value := value_array[0]
-		log.Println("Found value:")
-		log.Println(value)
-		log.Println()
-
 		point, err := db.GetPoint(key, value)
-		log.Println("got point:")
-		log.Println(point)
 
 		if err != nil {
 			log.Println("Error getting value:", err)
@@ -45,7 +31,9 @@ func Get_Result_Calculate(ctx *gin.Context, db db.IDb) {
 		}
 
 		log.Println("updating score")
+
 		// add points to the score
+		// Note: "businesss logic"
 		score[0] += point[0]
 		score[1] += point[1]
 
