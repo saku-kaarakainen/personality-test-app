@@ -17,6 +17,6 @@ type Question struct {
 // results
 type Result struct {
 	Id                    string   `json:"id"`
-	Label                 string   `json:"question_label"`
+	Label                 string   `json:"label"`
 	DescriptionParagraphs []string `json:"description_paragraphs"`
 }
