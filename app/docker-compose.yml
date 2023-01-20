@@ -1,0 +1,8 @@
+version: "2"
+
+services:
+  personality-test-app: 
+    image: personality-test-app:latest
+    ports:
+      - 3000:3000
+    container_name: personality-test-app
