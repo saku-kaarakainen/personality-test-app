@@ -40,7 +40,7 @@ func init() {
 		return
 	}
 
-	configData, err := ioutil.ReadFile("api_config.toml")
+	configData, err := ioutil.ReadFile("./config/config.toml")
 	if err != nil {
 		panic(err)
 	}

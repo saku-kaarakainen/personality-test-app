@@ -9,7 +9,7 @@ import (
 	goredis "github.com/go-redis/redis/v8" // uses redis7
 	"github.com/nitishm/go-rejson/v4"
 
-	"github.com/saku-kaarakainen/personality-test-app/api/api_config"
+	api_config "github.com/saku-kaarakainen/personality-test-app/api/config"
 	"github.com/saku-kaarakainen/personality-test-app/api/db"
 	"github.com/saku-kaarakainen/personality-test-app/api/routes"
 )

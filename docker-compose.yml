@@ -16,7 +16,7 @@ services:
     networks:
       - db-network
     volumes:
-      - ./redis.conf:/usr/local/etc/redis/redis.conf
+      - ./db/redis.conf:/usr/local/etc/redis/redis.conf
 
   personality-test-api:
     image: personality-test-api:latest
@@ -25,7 +25,6 @@ services:
     links:
       - personality-test-db
     container_name: personality-test-api
-    # dockerfile: api.Dockerfile
     networks:
       - db-network
       - api-network
@@ -37,7 +36,6 @@ services:
     links:
       - personality-test-api
     container_name: personality-test-app
-    # dockerfile: app.Dockerfile
     networks:
       - api-network
       
