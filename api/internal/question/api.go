@@ -7,19 +7,15 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func RegisterHandlers(router *gin.Engine, service Service, logger log.Logger) {
-	h := handler{
-		service: service,
-		logger:  logger,
-	}
+func RegisterHandlers(router *gin.Engine, service Service) {
+	h := handler{service: service}
 
 	// handlers relatec to /questions
-	router.GET("/question", h.getQuestions)
+	router.GET("/questions", h.getQuestions)
 }
 
 type handler struct {
 	service Service
-	logger  log.Logger
 }
 
 func (h handler) getQuestions(ctx *gin.Context) {
