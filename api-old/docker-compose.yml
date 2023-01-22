@@ -1,0 +1,28 @@
+version: "2"
+
+networks:
+   db-network:
+
+services:
+  personality-test-db:
+    # have stack server instead of plain redis, so redisJSON is available
+    # It contains a little bit of unnecessary boilerplate (other modules)
+    # more lightweight approach would be to to use only redis with redisJSON module
+    image: redis/redis-stack-server:latest
+    ports:
+      - 6379:6379
+    container_name: personality-test-db
+    networks:
+      - db-network
+    volumes:
+      - ./config/redis.conf:/usr/local/etc/redis/redis.conf
+
+  personality-test-api:
+    image: personality-test-api:latest
+    ports:
+      - 8080:8080
+    links:
+      - personality-test-db
+    container_name: personality-test-api
+    networks:
+      - db-network
