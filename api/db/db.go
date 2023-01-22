@@ -11,6 +11,7 @@ import (
 
 	goredis "github.com/go-redis/redis/v8" // uses redis7
 	"github.com/nitishm/go-rejson/v4"
+	"github.com/saku-kaarakainen/personality-test-app/api/config"
 )
 
 /*
@@ -45,10 +46,19 @@ type Db struct {
 }
 
 func NewDb(
+	cfg *config.Config,
 	ctx context.Context,
-	cli *goredis.Client,
-	rh *rejson.Handler,
 ) *Db {
+	cli := goredis.NewClient(&goredis.Options{
+		Addr:     cfg.Db.Addr,
+		Password: cfg.Db.Pw,
+		DB:       cfg.Db.SelectedDb,
+	})
+
+	// Redis settings for database
+	rh := rejson.NewReJSONHandler()
+	rh.SetGoRedisClient(cli)
+
 	return &Db{
 		ctx: ctx,
 		cli: cli,
@@ -60,12 +70,12 @@ func NewDb(
 
 func (db *Db) Ping() {
 	pong, err := db.cli.Ping(db.ctx).Result()
-	fmt.Println("Redis Ping:")
-	fmt.Println(pong, err)
-
 	if err != nil {
 		panic(err)
 	}
+
+	fmt.Println("Redis Ping:")
+	fmt.Println(pong, err)
 }
 
 func (db *Db) setFromFile(filename string, key string, objType interface{}) error {
@@ -163,6 +173,7 @@ func (db *Db) GetResult(score [2]int32) (Result, error) {
 	return data[0], nil
 }
 
+// TODO: Relocate?
 // Converts two dimensional score into binary flag.
 // Checks if the point of the score is above zero,
 // That is interpret as true.

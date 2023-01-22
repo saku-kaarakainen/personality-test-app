@@ -1,4 +1,4 @@
-[api]
+[server]
 addr = ":8080"
 allowOrigins = ["http://localhost:3000"] # allow frontend to access backend
 

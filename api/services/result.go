@@ -1,4 +1,4 @@
-package routes
+package services
 
 import (
 	"log"
@@ -8,11 +8,26 @@ import (
 	"github.com/saku-kaarakainen/personality-test-app/api/utils"
 )
 
-func Get_Result_Calculate(ctx *gin.Context, db db.IDb) {
+type Result struct {
+	ctx *gin.Context
+	db  db.IDb
+}
+
+func NewResult(
+	ctx *gin.Context,
+	db db.IDb,
+) Result {
+	return Result{
+		ctx: ctx,
+		db:  db,
+	}
+}
+
+func (r *Result) CalculateResult() {
 	score := [2]int32{0, 0}
 
 	// Note: "Business logic"
-	for raw_key, value_array := range ctx.Request.URL.Query() {
+	for raw_key, value_array := range r.ctx.Request.URL.Query() {
 		// Get the index from the url parameter
 		key, err := utils.Unformat("q[%s]", raw_key)
 		if err != nil {
@@ -22,7 +37,7 @@ func Get_Result_Calculate(ctx *gin.Context, db db.IDb) {
 
 		// Get the key and value from the param
 		value := value_array[0]
-		point, err := db.GetPoint(key, value)
+		point, err := r.db.GetPoint(key, value)
 
 		if err != nil {
 			log.Println("Error getting value:", err)
