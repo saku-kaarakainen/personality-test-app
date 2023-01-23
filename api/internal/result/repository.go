@@ -23,8 +23,8 @@ func NewRepository(db db.NoSqlDb) Repository {
 	return repository{db: db}
 }
 
-func (r repository) Update(Results []entity.Result) error {
-	return r.db.Update("results", Results)
+func (r repository) Update(results []entity.Result) error {
+	return r.db.Update("results", results)
 }
 
 func (r repository) GetResults() ([]entity.Result, error) {

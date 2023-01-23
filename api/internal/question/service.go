@@ -2,7 +2,6 @@ package question
 
 import (
 	"encoding/json"
-	"log"
 
 	"github.com/saku-kaarakainen/personality-test-app/api/internal/entity"
 	"github.com/saku-kaarakainen/personality-test-app/api/internal/utils"
@@ -16,11 +15,15 @@ type Service interface {
 type Question struct{ entity.Question }
 
 type service struct {
-	repo Repository
+	repo   Repository
+	loader utils.Loader
 }
 
-func NewService(repo Repository) Service {
-	return service{repo}
+func NewService(repo Repository, loader utils.Loader) Service {
+	return service{
+		repo:   repo,
+		loader: loader,
+	}
 }
 
 // Stores loaded file in database
@@ -29,7 +32,7 @@ func NewService(repo Repository) Service {
 // this logic is requisite for server to operate.
 func (s service) StoreFile(filename string) error {
 	// 1. load the file
-	byteValue, err := utils.LoadFile(filename)
+	byteValue, err := s.loader.LoadFile(filename)
 	if err != nil {
 		return err
 	}
@@ -41,7 +44,6 @@ func (s service) StoreFile(filename string) error {
 	// 3. store file
 	// Note: This is redis database, so the value will be inserted if it does not exist.
 	if err := s.repo.Update(questions); err != nil {
-		log.Println("updating questions failed")
 		return err
 	}
 

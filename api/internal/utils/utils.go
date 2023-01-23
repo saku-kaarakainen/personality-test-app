@@ -7,7 +7,12 @@ import (
 	"strings"
 )
 
-func LoadFile(filename string) ([]byte, error) {
+type Loader interface {
+	LoadFile(filename string) ([]byte, error)
+}
+type FileLoader struct{}
+
+func (f FileLoader) LoadFile(filename string) ([]byte, error) {
 	jsonFile, err := os.Open(filename)
 	if err != nil {
 		return nil, err
@@ -38,7 +43,6 @@ func Unformat(template string, input string) (string, error) {
 
 	// The logs are left in the comments for purpose, in case you need to debug this.
 	for i := 0; i < len(input); i++ {
-		// log.Printf("Comparing '%s' with '%s' at index '%d'.\n", string(input[i]), string(template[i]), i)
 		// byte comparison
 		if input[i] == template[i] {
 			continue
@@ -49,18 +53,15 @@ func Unformat(template string, input string) (string, error) {
 			return "", fmt.Errorf("unable to parse from input '%s' with template '%s'", input, template)
 		}
 
-		// log.Println("Going to inner loop")
 		template_index := i + 2
 
 		for ; i < len(input); i++ {
-			// log.Printf("Comparing '%s' with '%s' at index '%d'.\n", string(input[i]), string(template[template_index]), i)
 			// check if we are again matching with the template
 			if input[i] == template[template_index] {
 				break
 			}
 
 			result.WriteByte(input[i])
-			// log.Printf("constructed so far: %s\n", result.String())
 		}
 
 		// break already, because i was altered so it might be already pointing at end
