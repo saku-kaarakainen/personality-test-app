@@ -5,13 +5,6 @@ import (
 	"github.com/stretchr/testify/mock"
 )
 
-type _Repository interface {
-	Update([]entity.Result) error
-	GetResults() ([]entity.Result, error)
-	GetPoint(key string, value string) ([2]int32, error)
-	GetResultByFlag(flag int32) (Result, error)
-}
-
 type mockRepository struct {
 	mock.Mock
 }

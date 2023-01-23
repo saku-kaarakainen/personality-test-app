@@ -42,6 +42,27 @@ func TestQuestionStoreFile(t *testing.T) {
 	r.AssertCalled(t, "Update", q)
 }
 
+func TestGetQuestions(t *testing.T) {
+	var err error = nil
+	expected := []Question{{entity.Question{
+		Id:          "1",
+		Text:        "text",
+		Description: "desc",
+	}}}
+	r := new(mockRepository)
+	r.On("GetQuestions").Return([]entity.Question{{
+		Id:          "1",
+		Text:        "text",
+		Description: "desc",
+	}}, err)
+
+	s := NewService(r, test.MockLoader{})
+
+	actual, _ := s.GetQuestions()
+
+	assert.Equal(t, expected, actual)
+}
+
 type mockService struct {
 	mock.Mock
 }

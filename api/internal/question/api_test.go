@@ -10,9 +10,6 @@ import (
 
 func TestAPI(t *testing.T) {
 	router := test.MockGinRouter()
-	// header := http.Header{}
-
-	// define in service_test.go
 	srvs := new(mockService)
 
 	qsts := []Question{
