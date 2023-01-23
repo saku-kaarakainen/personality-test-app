@@ -11,6 +11,7 @@ import (
 	"github.com/stretchr/testify/mock"
 )
 
+// Test: error cases
 func TestQuestionStoreFile(t *testing.T) {
 	// internal/question is the current dir
 	filename := "./../../config/questions.json"
@@ -42,6 +43,7 @@ func TestQuestionStoreFile(t *testing.T) {
 	r.AssertCalled(t, "Update", q)
 }
 
+// TODO: Test special cases
 func TestGetQuestions(t *testing.T) {
 	var err error = nil
 	expected := []Question{{entity.Question{

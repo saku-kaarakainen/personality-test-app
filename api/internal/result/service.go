@@ -68,8 +68,7 @@ func (s service) CalculateResult(kvps map[string][]string) (Result, error) {
 		}
 
 		// Add points to score
-		score[0] += point[0]
-		score[1] += point[1]
+		addPointToScore(&score, &point)
 	}
 
 	flag := convertScoreToFlag(score)
@@ -79,6 +78,11 @@ func (s service) CalculateResult(kvps map[string][]string) (Result, error) {
 	}
 
 	return result, nil
+}
+
+func addPointToScore(score *[2]int32, point *[2]int32) {
+	score[0] += point[0]
+	score[1] += point[1]
 }
 
 // Converts two dimensional score into a flag.
