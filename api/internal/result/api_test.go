@@ -4,32 +4,25 @@ import (
 	"net/http"
 	"testing"
 
+	"github.com/saku-kaarakainen/personality-test-app/api/internal/entity"
 	"github.com/saku-kaarakainen/personality-test-app/api/internal/test"
+	"github.com/stretchr/testify/mock"
 )
 
 func TestAPI(t *testing.T) {
 	router := test.MockGinRouter()
-	// header := http.Header{}
+	srvs := new(mockService)
 
-	// define in service_test.go
-	repo := mockRepository{
-		// items: []entity.Question{
-		// 	{
-		// 		Id:          "1",
-		// 		Text:        "text",
-		// 		Description: "desc",
-		// 		Answers: []entity.Answer{{
-		// 			Id:    "1_1",
-		// 			Score: [2]int{0, 0},
-		// 			Label: "label",
-		// 		}},
-		// 	},
-		// },
-	}
+	res := Result{entity.Result{
+		Id:                    "1",
+		Score:                 2,
+		Label:                 "test",
+		DescriptionParagraphs: []string{"p1", "p2"},
+	}}
 
-	RegisterHandlers(router, NewService(repo, test.MockLoader{
-		RetBytes: []byte{},
-	}))
+	srvs.On("CalculateResult", mock.Anything).Return(res)
+
+	RegisterHandlers(router, srvs)
 
 	tests := []test.APITestCase{
 		{

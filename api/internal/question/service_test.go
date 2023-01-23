@@ -3,7 +3,6 @@ package question
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 	"testing"
 
 	"github.com/saku-kaarakainen/personality-test-app/api/internal/entity"
@@ -12,7 +11,7 @@ import (
 	"github.com/stretchr/testify/mock"
 )
 
-func TestStoreFile(t *testing.T) {
+func TestQuestionStoreFile(t *testing.T) {
 	// internal/question is the current dir
 	filename := "./../../config/questions.json"
 	var err error = nil
@@ -26,7 +25,6 @@ func TestStoreFile(t *testing.T) {
 
 	r := new(mockRepository)
 	r.On("Update", q).Return(err)
-	log.Println(" (1) calls:", r.Calls)
 
 	s := NewService(r, test.MockLoader{
 		RetBytes: b,
@@ -40,13 +38,6 @@ func TestStoreFile(t *testing.T) {
 		))
 	}
 
-	sv := s.(service)
-
-	log.Println(" (3) calls:", r.Calls)
-	log.Println("r: ", r)
-	log.Println("sv.repo:", sv.repo)
-
-	log.Println("assert Update with q: ", q)
 	// assert
 	r.AssertCalled(t, "Update", q)
 }
@@ -55,10 +46,10 @@ type mockService struct {
 	mock.Mock
 }
 
-func (s mockService) StoreFile(filename string) error {
+func (s *mockService) StoreFile(filename string) error {
 	return nil
 }
 
-func (s mockService) GetQuestions() ([]Question, error) {
+func (s *mockService) GetQuestions() ([]Question, error) {
 	return s.Called().Get(0).([]Question), nil
 }
