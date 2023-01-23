@@ -1,10 +1,9 @@
-package question
+package result
 
 import (
 	"net/http"
 	"testing"
 
-	"github.com/saku-kaarakainen/personality-test-app/api/internal/entity"
 	"github.com/saku-kaarakainen/personality-test-app/api/internal/test"
 )
 
@@ -14,45 +13,54 @@ func TestAPI(t *testing.T) {
 
 	// define in service_test.go
 	repo := mockRepository{
-		items: []entity.Question{
-			{
-				Id:          "1",
-				Text:        "text",
-				Description: "desc",
-				Answers: []entity.Answer{{
-					Id:    "1_1",
-					Score: [2]int{0, 0},
-					Label: "label",
-				}},
-			},
-		},
+		// items: []entity.Question{
+		// 	{
+		// 		Id:          "1",
+		// 		Text:        "text",
+		// 		Description: "desc",
+		// 		Answers: []entity.Answer{{
+		// 			Id:    "1_1",
+		// 			Score: [2]int{0, 0},
+		// 			Label: "label",
+		// 		}},
+		// 	},
+		// },
 	}
 
 	RegisterHandlers(router, NewService(repo))
 
 	tests := []test.APITestCase{
 		{
-			Name:         "question: get questions",
+			Name:         "result: calculate result",
 			Method:       "GET",
-			URL:          "/questions",
+			URL:          "/result/calculate?q[0]=1&q[1]=2&q[2]=3",
 			Body:         "",
 			Header:       nil,
 			WantStatus:   http.StatusOK,
-			WantResponse: `[{"id":"1","question_text":"text","question_description":"desc","answers":[{"id":"1_1","score":[0,0],"answer_label":"label"}]}]`,
+			WantResponse: "",
 		},
 		{
-			Name:         "question: unknown route",
+			Name:         "result: calculate, no params",
 			Method:       "GET",
-			URL:          "/questions/something",
+			URL:          "/result/calculate",
+			Body:         "",
+			Header:       nil,
+			WantStatus:   http.StatusOK,
+			WantResponse: "",
+		},
+		{
+			Name:         "result: unknown route",
+			Method:       "GET",
+			URL:          "/result",
 			Body:         "",
 			Header:       nil,
 			WantStatus:   http.StatusNotFound,
 			WantResponse: "",
 		},
 		{
-			Name:         "question: wrong verb",
+			Name:         "result: wrong verb",
 			Method:       "POST",
-			URL:          "/questions",
+			URL:          "/result/calculate",
 			Body:         "",
 			Header:       nil,
 			WantStatus:   http.StatusNotFound,

@@ -2,7 +2,6 @@ package result
 
 import (
 	"encoding/json"
-	"log"
 
 	"github.com/saku-kaarakainen/personality-test-app/api/internal/entity"
 	"github.com/saku-kaarakainen/personality-test-app/api/internal/utils"
@@ -31,7 +30,6 @@ func (s service) StoreFile(filename string) error {
 	// 1. load the file
 	byteValue, err := utils.LoadFile(filename)
 	if err != nil {
-		log.Println("load Results file failed")
 		return err
 	}
 
@@ -39,16 +37,12 @@ func (s service) StoreFile(filename string) error {
 	var Results []entity.Result
 	json.Unmarshal(byteValue, &Results)
 
-	log.Println("loaded Results file ")
-
 	// 3. store file
 	// Note: This is redis database, so the value will be inserted if it does not exist.
 	if err := s.repo.Update(Results); err != nil {
-		log.Println("updating Results failed")
 		return err
 	}
 
-	log.Println("file stored")
 	return nil
 }
 
