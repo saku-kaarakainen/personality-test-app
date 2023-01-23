@@ -37,8 +37,6 @@ func NewRedisDb(
 	}
 }
 
-// Panics if the server does not ping
-// when pinging, should answer with pong.
 func (db *RedisDb) Ping() (string, error) {
 	pong, err := db.cli.Ping(db.ctx).Result()
 	if err != nil {

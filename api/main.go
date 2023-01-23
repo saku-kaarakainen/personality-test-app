@@ -9,6 +9,7 @@ import (
 	"github.com/saku-kaarakainen/personality-test-app/api/internal/config"
 	"github.com/saku-kaarakainen/personality-test-app/api/internal/db"
 	"github.com/saku-kaarakainen/personality-test-app/api/internal/question"
+	"github.com/saku-kaarakainen/personality-test-app/api/internal/result"
 )
 
 func main() {
@@ -20,7 +21,10 @@ func main() {
 		panic(err)
 	}
 
+	// setup router
 	ctx := context.Background()
+	router := gin.Default()
+	useCors(router, cfg)
 
 	// setup database
 	db := db.NewRedisDb(ctx, cfg)
@@ -31,31 +35,18 @@ func main() {
 	log.Println("ping: ", pong)
 
 	qsrvs := question.NewService(question.NewRepository(db))
-	err = qsrvs.StoreFile("./config/questions.json")
-	if err != nil {
+	if err = qsrvs.StoreFile("./config/questions.json"); err != nil {
 		panic(err)
 	}
 
-	//rsrvs := result.NewService(result.NewRepository(db, *logger), *logger)
-	log.Println("setting router")
-	router := gin.Default()
-	useCors(router, cfg)
+	rsrvs := result.NewService(result.NewRepository(db))
+	if err = rsrvs.StoreFile("./config/results.json"); err != nil {
+		panic(err)
+	}
 
-	// Questions
-
+	// attaching handlers to router
 	question.RegisterHandlers(router, qsrvs)
-
-	// Answers?
-
-	// TODO: Results
-	// result.RegisterHandlers(
-	// 	router,
-	// 	result.NewService(
-	// 		result.NewRepository(db, logger),
-	// 		logger,
-	// 	),
-	// 	logger,
-	// )
+	result.RegisterHandlers(router, rsrvs)
 
 	router.Run(cfg.Api.Addr)
 }
