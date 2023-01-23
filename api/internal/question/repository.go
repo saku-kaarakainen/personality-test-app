@@ -35,5 +35,3 @@ func (r repository) GetQuestions() ([]entity.Question, error) {
 
 	return data, nil
 }
-
-// TODO: Set questions

@@ -31,15 +31,12 @@ func (s service) StoreFile(filename string) error {
 	// 1. load the file
 	byteValue, err := utils.LoadFile(filename)
 	if err != nil {
-		log.Println("load questions file failed")
 		return err
 	}
 
 	// 2. cast to correct type
 	var questions []entity.Question
 	json.Unmarshal(byteValue, &questions)
-
-	log.Println("loaded questions file ")
 
 	// 3. store file
 	// Note: This is redis database, so the value will be inserted if it does not exist.
@@ -48,7 +45,6 @@ func (s service) StoreFile(filename string) error {
 		return err
 	}
 
-	log.Println("file stored")
 	return nil
 }
 

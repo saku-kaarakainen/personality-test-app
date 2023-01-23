@@ -13,9 +13,6 @@ import (
 )
 
 func main() {
-	// main should:
-	// 		init config
-	//		tell which db to use
 	cfg, err := config.Load("./config/config.toml")
 	if err != nil {
 		panic(err)
