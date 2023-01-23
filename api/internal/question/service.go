@@ -5,7 +5,7 @@ import (
 	"log"
 
 	"github.com/saku-kaarakainen/personality-test-app/api/internal/entity"
-	myutils "github.com/saku-kaarakainen/personality-test-app/api/utils"
+	"github.com/saku-kaarakainen/personality-test-app/api/internal/utils"
 )
 
 type Service interface {
@@ -29,7 +29,7 @@ func NewService(repo Repository) Service {
 // this logic is requisite for server to operate.
 func (s service) StoreFile(filename string) error {
 	// 1. load the file
-	byteValue, err := myutils.LoadFile(filename)
+	byteValue, err := utils.LoadFile(filename)
 	if err != nil {
 		log.Println("load questions file failed")
 		return err

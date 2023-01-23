@@ -3,7 +3,6 @@ package result
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 
 	"github.com/saku-kaarakainen/personality-test-app/api/internal/db"
 	"github.com/saku-kaarakainen/personality-test-app/api/internal/entity"
@@ -29,7 +28,7 @@ func (r repository) Update(Results []entity.Result) error {
 }
 
 func (r repository) GetResults() ([]entity.Result, error) {
-	jsonBlob, err := r.db.Get("Results", ".")
+	jsonBlob, err := r.db.Get("results", ".")
 	if err != nil {
 		return nil, err
 	}
@@ -43,10 +42,6 @@ func (r repository) GetResults() ([]entity.Result, error) {
 func (r repository) GetPoint(key string, value string) ([2]int32, error) {
 	path := fmt.Sprintf("$.[?(@.id==\"%s\")].answers[?(@.id==\"%s\")].score", key, value)
 	jsonBlob, err := r.db.Get("questions", path)
-
-	log.Println("path: ", path)
-	log.Println("blob: ", jsonBlob)
-
 	if err != nil {
 		return [2]int32{0, 0}, err
 	}

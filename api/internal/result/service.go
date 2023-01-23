@@ -5,8 +5,7 @@ import (
 	"log"
 
 	"github.com/saku-kaarakainen/personality-test-app/api/internal/entity"
-	"github.com/saku-kaarakainen/personality-test-app/api/utils"
-	myutils "github.com/saku-kaarakainen/personality-test-app/api/utils"
+	"github.com/saku-kaarakainen/personality-test-app/api/internal/utils"
 )
 
 type Service interface {
@@ -30,7 +29,7 @@ func NewService(repo Repository) Service {
 // this logic is requisite for server to operate.
 func (s service) StoreFile(filename string) error {
 	// 1. load the file
-	byteValue, err := myutils.LoadFile(filename)
+	byteValue, err := utils.LoadFile(filename)
 	if err != nil {
 		log.Println("load Results file failed")
 		return err
@@ -54,10 +53,7 @@ func (s service) StoreFile(filename string) error {
 }
 
 func (s service) CalculateResult(kvps map[string][]string) (Result, error) {
-	log.Println("SERVICE CALCULATE RESULT")
 	score := [2]int32{0, 0}
-
-	log.Println("kvps: ", kvps)
 
 	// Note: "Business logic"
 	for raw_key, value_array := range kvps {
@@ -69,28 +65,18 @@ func (s service) CalculateResult(kvps map[string][]string) (Result, error) {
 
 		// Get the key and value from the param
 		value := value_array[0]
-
-		log.Printf("key '%s', value '%s'\n", key, value)
-
 		point, err := s.repo.GetPoint(key, value)
 		if err != nil {
 			return Result{}, nil
 		}
 
-		log.Println("found point: ", point)
+		// Add points to score
 		score[0] += point[0]
 		score[1] += point[1]
-
-		log.Println("score is now: ", score)
 	}
 
-	log.Println("convert score '%v' to flag.", score)
 	flag := convertScoreToFlag(score)
-	log.Println("generated flag: ", flag)
-
 	result, err := s.repo.GetResultByFlag(flag)
-	log.Println("found result: ", result)
-
 	if err != nil {
 		return Result{}, err
 	}
@@ -109,6 +95,11 @@ func (s service) CalculateResult(kvps map[string][]string) (Result, error) {
 //
 //	return (int32((-score[0]>>31)&1) | (int32((-score[1]>>31)&1) << 1))
 func convertScoreToFlag(score [2]int32) int32 {
+
+	log.Println("TESTESTESTTESTEESTETSETETSTETTETS")
+	log.Println("TESTESTESTTESTEESTETSETETSTETTETS")
+	log.Println("TESTESTESTTESTEESTETSETETSTETTETS")
+
 	x_flag := score[0] >= 0
 	y_flag := score[1] >= 0
 
