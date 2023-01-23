@@ -11,12 +11,12 @@
             },
             {
                 "id": "2",
-                "score": [-1 , 1],
+                "score": [-1 , -1],
                 "answer_label": "Think it’s more important to give them some of your time; work can wait"
             },
             {
                 "id": "3",
-                "score": [1, -1],
+                "score": [1, 1],
                 "answer_label": "Listen, but with only with half an ear"
             },
             {
@@ -38,12 +38,12 @@
             },
             {
                 "id": "6",
-                "score": [-1 , 1],
+                "score": [-1 , -1],
                 "answer_label": "Bubble with inner anger, but keep quiet"
             },
             {
                 "id": "7",
-                "score": [1, -1],
+                "score": [1, 1],
                 "answer_label": "Explain to other equally impatient people in the room that the doctor is always running late"
             },
             {
@@ -65,12 +65,12 @@
             },
             {
                 "id": "10",
-                "score": [-1 , 1],
+                "score": [-1 , -1],
                 "answer_label": "Think that they are obviously right"
             },
             {
                 "id": "11",
-                "score": [1, -1],
+                "score": [1, 1],
                 "answer_label": "Defend your own point of view, tooth and nail"
             },
             {
@@ -92,12 +92,12 @@
             },
             {
                 "id": "14",
-                "score": [-1 , 1],
+                "score": [-1 , -1],
                 "answer_label": "Follow the group without question"
             },
             {
                 "id": "15",
-                "score": [1, -1],
+                "score": [1, 1],
                 "answer_label": "Make sure that everyone is able to hear properly"
             },
             {
@@ -119,12 +119,12 @@
             },
             {
                 "id": "18",
-                "score": [-1 , 1],
+                "score": [-1 , -1],
                 "answer_label": "Talk privately between themselves"
             },
             {
                 "id": "19",
-                "score": [1, -1],
+                "score": [1, 1],
                 "answer_label": "Hang around you all evening"
             },
             {
@@ -146,12 +146,12 @@
             },
             {
                 "id": "22",
-                "score": [-1 , 1],
+                "score": [-1 , -1],
                 "answer_label": "Wait to share it with your friends after work"
             },
             {
                 "id": "23",
-                "score": [1, -1],
+                "score": [1, 1],
                 "answer_label": "Try again a bit later with one of your colleagues"
             },
             {
