@@ -6,59 +6,53 @@ import (
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
-	goredis "github.com/go-redis/redis/v8" // uses redis7
-	"github.com/nitishm/go-rejson/v4"
-
-	"github.com/saku-kaarakainen/personality-test-app/api/api_config"
-	"github.com/saku-kaarakainen/personality-test-app/api/db"
-	"github.com/saku-kaarakainen/personality-test-app/api/routes"
+	"github.com/saku-kaarakainen/personality-test-app/api/internal/config"
+	"github.com/saku-kaarakainen/personality-test-app/api/internal/db"
+	"github.com/saku-kaarakainen/personality-test-app/api/internal/question"
+	"github.com/saku-kaarakainen/personality-test-app/api/internal/result"
 )
 
-func setupRoutes(router *gin.Engine, db db.IDb) {
-	router.GET("/ping", func(ctx *gin.Context) {
-		// It is more approariate to put the func into it's own file, 'routes/ping.go'.
-		// However this goes easily into very big rabbit hole with better framework, or better use of it.
-		// Right now it's better to keep the code simpler and leave this as-is.
-		ctx.String(200, "pong")
-	})
-	router.GET("/questions", func(ctx *gin.Context) {
-		routes.Get_questions(ctx, db)
-	})
-	router.GET("result/calculate", func(ctx *gin.Context) {
-		log.Println("We found route for calculate")
-		routes.Get_Result_Calculate(ctx, db)
-	})
-}
-
-func setupRouterMiddleware(router *gin.Engine) {
-	corsConfig := cors.DefaultConfig()
-	corsConfig.AllowOrigins = api_config.Api.AllowOrigins
-	router.Use(cors.New(corsConfig))
-}
-
-func setupDatabase() *db.Db {
-	var (
-		ctx = context.Background()
-		cli = goredis.NewClient(&goredis.Options{
-			Addr:     api_config.Db.Addr,
-			Password: api_config.Db.Pw,
-			DB:       api_config.Db.SelectedDb,
-		})
-		rh = rejson.NewReJSONHandler()
-	)
-
-	rh.SetGoRedisClient(cli)
-	database := db.NewDb(ctx, cli, rh)
-	database.Ping()
-	database.Populate()
-	return database
-}
-
 func main() {
-	database := setupDatabase()
-	router := gin.Default()
-	setupRouterMiddleware(router)
-	setupRoutes(router, database)
+	// main should:
+	// 		init config
+	//		tell which db to use
+	cfg, err := config.Load("./config/config.toml")
+	if err != nil {
+		panic(err)
+	}
 
-	router.Run(api_config.Api.Addr)
+	// setup router
+	ctx := context.Background()
+	router := gin.Default()
+	useCors(router, cfg)
+
+	// setup database
+	db := db.NewRedisDb(ctx, cfg)
+	pong, err := db.Ping()
+	if err != nil {
+		panic(err)
+	}
+	log.Println("ping: ", pong)
+
+	qsrvs := question.NewService(question.NewRepository(db))
+	if err = qsrvs.StoreFile("./config/questions.json"); err != nil {
+		panic(err)
+	}
+
+	rsrvs := result.NewService(result.NewRepository(db))
+	if err = rsrvs.StoreFile("./config/results.json"); err != nil {
+		panic(err)
+	}
+
+	// attaching handlers to router
+	question.RegisterHandlers(router, qsrvs)
+	result.RegisterHandlers(router, rsrvs)
+
+	router.Run(cfg.Api.Addr)
+}
+
+func useCors(router *gin.Engine, cfg config.Config) {
+	corsConfig := cors.DefaultConfig()
+	corsConfig.AllowOrigins = cfg.Api.AllowOrigins
+	router.Use(cors.New(corsConfig))
 }

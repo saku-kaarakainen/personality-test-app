@@ -3,7 +3,7 @@ FROM node:16-alpine as node_builder
 
 ENV APP_FOLDER "/personality-test-app"
 
-COPY app "${APP_FOLDER}"
+COPY . "${APP_FOLDER}"
 
 WORKDIR "${APP_FOLDER}"
 

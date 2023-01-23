@@ -2,8 +2,26 @@ package utils
 
 import (
 	"fmt"
+	"io/ioutil"
+	"os"
 	"strings"
 )
+
+func LoadFile(filename string) ([]byte, error) {
+	jsonFile, err := os.Open(filename)
+	if err != nil {
+		return nil, err
+	}
+
+	defer jsonFile.Close()
+
+	byteValue, err := ioutil.ReadAll(jsonFile)
+	if err != nil {
+		return nil, err
+	}
+
+	return byteValue, nil
+}
 
 // Rips out the value from the input based by the template
 // Works with one parameter "%s".

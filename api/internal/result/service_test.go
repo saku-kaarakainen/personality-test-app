@@ -1,4 +1,4 @@
-package db
+package result
 
 import (
 	"fmt"
@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestGetResult(t *testing.T) {
+func TestConvertScoreToFlag(t *testing.T) {
 
 	var tests = []struct {
 		score        [2]int32
