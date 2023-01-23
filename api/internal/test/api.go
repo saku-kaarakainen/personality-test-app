@@ -33,7 +33,7 @@ func Endpoint(t *testing.T, router *gin.Engine, tc APITestCase) {
 			req.Header.Set("Content-Type", "application/json")
 		}
 		router.ServeHTTP(res, req)
-		assert.Equal(t, tc.WantStatus, res.Code, "status mismatch")
+		assert.Equal(t, tc.WantStatus, res.Code, "status mismatch. Response: "+res.Body.String())
 		if tc.WantResponse == "" {
 			return
 		}

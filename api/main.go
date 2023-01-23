@@ -10,6 +10,7 @@ import (
 	"github.com/saku-kaarakainen/personality-test-app/api/internal/db"
 	"github.com/saku-kaarakainen/personality-test-app/api/internal/question"
 	"github.com/saku-kaarakainen/personality-test-app/api/internal/result"
+	"github.com/saku-kaarakainen/personality-test-app/api/internal/utils"
 )
 
 func main() {
@@ -31,12 +32,13 @@ func main() {
 	}
 	log.Println("ping: ", pong)
 
-	qsrvs := question.NewService(question.NewRepository(db))
+	loader := utils.FileLoader{}
+	qsrvs := question.NewService(question.NewRepository(db), loader)
 	if err = qsrvs.StoreFile("./config/questions.json"); err != nil {
 		panic(err)
 	}
 
-	rsrvs := result.NewService(result.NewRepository(db))
+	rsrvs := result.NewService(result.NewRepository(db), loader)
 	if err = rsrvs.StoreFile("./config/results.json"); err != nil {
 		panic(err)
 	}

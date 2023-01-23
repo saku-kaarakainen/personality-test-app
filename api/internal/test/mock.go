@@ -12,17 +12,11 @@ func MockGinRouter() *gin.Engine {
 	return router
 }
 
-/*
-TODO: Remove
-// MockRouter creates a routing.Router for testing APIs.
-func MockRouterOld(logger log.Logger) *routing.Router {
-	router := routing.New()
-	router.Use(
-		accesslog.Handler(logger),
-		errors.Handler(logger),
-		content.TypeNegotiator(content.JSON),
-		cors.Handler(cors.AllowAll),
-	)
-	return router
+type MockLoader struct {
+	RetBytes []byte
 }
-*/
+
+func (l MockLoader) LoadFile(filename string) ([]byte, error) {
+	bytes := l.RetBytes
+	return bytes, nil
+}

@@ -27,7 +27,9 @@ func TestAPI(t *testing.T) {
 		// },
 	}
 
-	RegisterHandlers(router, NewService(repo))
+	RegisterHandlers(router, NewService(repo, test.MockLoader{
+		RetBytes: []byte{},
+	}))
 
 	tests := []test.APITestCase{
 		{

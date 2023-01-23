@@ -13,22 +13,24 @@ func TestAPI(t *testing.T) {
 	// header := http.Header{}
 
 	// define in service_test.go
-	repo := mockRepository{
-		items: []entity.Question{
-			{
-				Id:          "1",
-				Text:        "text",
-				Description: "desc",
-				Answers: []entity.Answer{{
-					Id:    "1_1",
-					Score: [2]int{0, 0},
-					Label: "label",
-				}},
-			},
-		},
+	srvs := new(mockService)
+
+	qsts := []Question{
+		{entity.Question{
+			Id:          "1",
+			Text:        "text",
+			Description: "desc",
+			Answers: []entity.Answer{{
+				Id:    "1_1",
+				Score: [2]int{0, 0},
+				Label: "label",
+			}},
+		}},
 	}
 
-	RegisterHandlers(router, NewService(repo))
+	srvs.On("GetQuestions").Return(qsts)
+
+	RegisterHandlers(router, srvs)
 
 	tests := []test.APITestCase{
 		{

@@ -18,6 +18,7 @@ type handler struct {
 
 func (h handler) getQuestions(ctx *gin.Context) {
 	data, err := h.service.GetQuestions()
+
 	if err != nil {
 		ctx.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
 			"errorMessage": "An error occurred",

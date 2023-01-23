@@ -7,7 +7,12 @@ import (
 	"strings"
 )
 
-func LoadFile(filename string) ([]byte, error) {
+type Loader interface {
+	LoadFile(filename string) ([]byte, error)
+}
+type FileLoader struct{}
+
+func (f FileLoader) LoadFile(filename string) ([]byte, error) {
 	jsonFile, err := os.Open(filename)
 	if err != nil {
 		return nil, err
