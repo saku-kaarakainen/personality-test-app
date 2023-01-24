@@ -21,11 +21,18 @@ It is a plus if you write some unit-tests.
 
 ## How to run this app
 
+
+Call in the terminal in the root of the repo.
 ```
 make run
 ```
 
-Running `make run` should be enough. If you are using a machine, that does not support bash scripts, you can call commands of the script separately. You need to have Docker installed on your system.
+To run tests:
+```
+make test
+```
+
+If you want to launch the app or api only, you can navigate in their respective sub folders and use the same make - commands than in the root directory.
 
 
 ## Troubleshoot
