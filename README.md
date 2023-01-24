@@ -21,7 +21,11 @@ It is a plus if you write some unit-tests.
 
 ## How to run this app
 
-Running `./run-all.sh` should be enough. If you are using a machine, that does not support bash scripts, you can call commands of the script separately. You need to have Docker installed on your system.
+```
+make run
+```
+
+Running `make run` should be enough. If you are using a machine, that does not support bash scripts, you can call commands of the script separately. You need to have Docker installed on your system.
 
 
 ## Troubleshoot
