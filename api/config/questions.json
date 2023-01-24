@@ -133,32 +133,5 @@
                 "answer_label": "Always drag the conversation back to themselves"
             }
         ]
-    },
-    {
-        "id": "6",
-        "question_text": "You crack a joke at work, but nobody seems to have noticed. You:",
-        "question_description": "All questions are required",
-        "answers": [
-            {
-                "id": "21",
-                "score": [-1, -1],
-                "answer_label": "Think it’s for the best — it was a lame joke anyway"
-            },
-            {
-                "id": "22",
-                "score": [-1 , -1],
-                "answer_label": "Wait to share it with your friends after work"
-            },
-            {
-                "id": "23",
-                "score": [1, 1],
-                "answer_label": "Try again a bit later with one of your colleagues"
-            },
-            {
-                "id": "24",
-                "score": [1, 1], 
-                "answer_label": "Keep telling it until they pay attention"
-            }
-        ]
     }
 ]
